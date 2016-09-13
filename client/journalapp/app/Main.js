@@ -152,6 +152,7 @@ export default class Main extends Component {
                                                     navigator={navigator}
                                                     updateFriend={ this.updateFriend.bind(this) }/>;
     if (this.state.page === "SettingsTab") return <SettingsTab
+                                                    navigator={navigator} 
                                                     signOut={ this.props.signOut }/>;
   }
 
