@@ -12,6 +12,15 @@ import {
 
 import styles from '../styles/EntryStyles';
 
+var parseDate = (date) => {
+  if (date) {
+    date = new Date(date);
+    return DateFormatter(date, "ddd, mmm d");
+  } else {
+    return 'October 10th';
+  }
+};
+
 var Entry = (props) => (
   <View style={ styles.container }>
     <View style={ styles.row }>
@@ -25,7 +34,10 @@ var Entry = (props) => (
       </View>
       <View style={ styles.rowBody }>
         <Text style={ styles.entryText }>
-          { props.text }
+          { props.text }     
+        </Text>
+        <Text style={ styles.rating }>
+          Rating:{ props.rating }
         </Text>
       </View>
     </View>
@@ -33,8 +45,3 @@ var Entry = (props) => (
 );
 
 module.exports = Entry;
-
-var parseDate = (date) => {
-  date = new Date(date);
-  return DateFormatter(date, "ddd, mmm d");
-};

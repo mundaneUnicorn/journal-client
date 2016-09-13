@@ -19,7 +19,7 @@ import EntryList from './EntryList';
 
 import GeoCoder from 'react-native-geocoder';
 
-import styles from '../styles/EntriesTabStyles'
+import styles from '../styles/EntriesTabStyles';
 
 export default class EntriesTab extends Component {
   constructor(props) {
