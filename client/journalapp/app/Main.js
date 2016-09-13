@@ -218,6 +218,8 @@ export default class Main extends Component {
         <SearchFriends
           navigator={ navigator } />
       )
+    } else if (route.title === 'PasswordScene') {
+      
     }
   }
 
@@ -294,6 +296,10 @@ export default class Main extends Component {
                   return (<Text style={ styles.title }>{ this.state.friendName } </Text>);
                 } else if ( this.state.page === 'FriendsTab' ) {
                   return (<Text style={ styles.title }>{ 'Friends' }</Text>);
+                }
+
+                if (route.title === 'PasswordScene') {
+                  return (<Text style={ styles.title }>{ 'Password Change' }</Text>);
                 }
 
                 // Title views for the settings route.
