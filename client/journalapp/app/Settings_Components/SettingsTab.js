@@ -47,7 +47,7 @@ export default class SettingsTab extends Component {
         </View>
       </TouchableHighlight>
 
-      <TouchableHighlight onPress={ () => console.log('/* navigate to new scene */') }>
+      <TouchableHighlight onPress={ () => this.props.navigator.push({title: 'PasswordScene'}) }>
         <View style={ styles.rowContainer }>
           <View style={ styles.row }>
             <Text style={ styles.bodyText }>Change password</Text>
