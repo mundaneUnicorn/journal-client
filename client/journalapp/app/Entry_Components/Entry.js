@@ -21,6 +21,10 @@ var parseDate = (date) => {
   }
 };
 
+var likePost = function () {
+  console.log('Post Liked!');
+};
+
 var Entry = (props) => (
   <View style={ styles.container }>
     <View style={ styles.row }>
@@ -36,7 +40,7 @@ var Entry = (props) => (
         <Text style={ styles.entryText }>
           { props.text }     
         </Text>
-        <Text style={ styles.rating }>
+        <Text style={ styles.rating } onPress={likePost}>
           Rating:{ props.rating }
         </Text>
       </View>
