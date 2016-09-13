@@ -31,17 +31,14 @@ export default class SettingsTab extends Component {
     });
   }
 
-  logToConsole() {
-    console.log('YO DAWG I CLICKED THIS SHIT');
-  }
-
   render() {
     console.log('signout tab');
 
    return (
     <View style={ styles.container }>
+
       <Text style={ styles.subHeader }>Profile information</Text>
-      <TouchableHighlight>
+      <TouchableHighlight onPress={ () => console.log('/* navigate to new scene */') }>
         <View style={ styles.rowContainer }>
           <View style={ styles.row }>
             <Text style={ styles.bodyText }>Username: { this.state.username }</Text>
@@ -49,7 +46,8 @@ export default class SettingsTab extends Component {
           </View>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight onPress={ this.logToConsole }>
+
+      <TouchableHighlight onPress={ () => console.log('/* navigate to new scene */') }>
         <View style={ styles.rowContainer }>
           <View style={ styles.row }>
             <Text style={ styles.bodyText }>Change password</Text>
@@ -57,6 +55,7 @@ export default class SettingsTab extends Component {
           </View>
         </View>
       </TouchableHighlight>
+
       <Button onPress= { () => this.props.signOut() } style={ {padding: 20} }>Sign Out</Button>
     </View>
    )
