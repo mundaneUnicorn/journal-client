@@ -7,7 +7,8 @@ import {
   TextInput,
   ListView,
   View,
-  Dimensions
+  Dimensions,
+  AsyncStorage,
 } from 'react-native';
 
 import styles from '../styles/EntryStyles';
@@ -22,7 +23,17 @@ var parseDate = (date) => {
 };
 
 var likePost = function () {
-  console.log('Post Liked!');
+
+  AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+    fetch('http://localhost:3000/api/likes', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-access-token': token,
+      }
+    });
+  });
+
 };
 
 var Entry = (props) => (
