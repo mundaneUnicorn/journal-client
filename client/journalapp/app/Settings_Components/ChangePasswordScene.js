@@ -18,7 +18,8 @@ export default class ChangePassword extends Component {
 
     this.state = {
       oldPW: '',
-      newPW: ''
+      newPW: '',
+      successful: false
     }
   }
 
