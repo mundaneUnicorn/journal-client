@@ -49,7 +49,7 @@ export default class SignupTab extends Component {
         .then( json => {
           try {
             AsyncStorage.multiSet([['@MySuperStore:token', json.token], ['@MySuperStore:username', this.state.username]], (err) => {
-              if ( err ){ console.warn(err); }
+              if ( err ){ console.log(err); }
               this.props.updateStatus(true);
             });
           } catch (error) {

@@ -46,7 +46,7 @@ export default class FriendScene extends Component {
           })
         })
         .catch((error) => {
-          console.warn("fetch error on getrequest:", error)
+          console.log("fetch error on getrequest:", error)
         });
       });
     });
