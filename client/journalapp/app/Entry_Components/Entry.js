@@ -22,42 +22,59 @@ var parseDate = (date) => {
   }
 };
 
-var likePost = function () {
-
+var likePost = function (id) {
   AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
     fetch('http://localhost:3000/api/likes', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
         'x-access-token': token,
-      }
-      body: JSON.stringify(props.id),
+      },
+      body: JSON.stringify({ entryId: 'Whaddup?' }),
     });
   });
-
 };
 
-var Entry = (props) => (
-  <View style={ styles.container }>
-    <View style={ styles.row }>
-      <View style={ styles.rowHeader }>
-        <Text style={ styles.date }>
-          { parseDate(props.createdAt) }
-        </Text>
-        <Text style={ styles.location }>
-          { props.location }
-        </Text>
-      </View>
-      <View style={ styles.rowBody }>
-        <Text style={ styles.entryText }>
-          { props.text }     
-        </Text>
-        <Text style={ styles.rating } onPress={likePost}>
-          Rating:{ props.rating }
-        </Text>
-      </View>
-    </View>
-  </View>
-);
+export default class Entry extends Component {
+  constructor(props) {
+    super(props);
+    this.props = props;
+    this.likePost = function () {
+      AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+        fetch('http://localhost:3000/api/likes', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            'x-access-token': token,
+          },
+          body: JSON.stringify({ entryId: props.id }),
+        });
+      });
+    };
+  }
 
-module.exports = Entry;
+  render() {
+    return (
+      <View style={ styles.container }>
+        <View style={ styles.row }>
+          <View style={ styles.rowHeader }>
+            <Text style={ styles.date }>
+              { parseDate(this.props.createdAt) }
+            </Text>
+            <Text style={ styles.location }>
+              { this.props.location }
+            </Text>
+          </View>
+          <View style={ styles.rowBody }>
+            <Text style={ styles.entryText }>
+              { this.props.text }     
+            </Text>
+            <Text style={ styles.rating } onPress={ this.likePost }>
+              Rating:{ this.props.rating }
+            </Text>
+          </View>
+        </View>
+      </View>
+    )
+  }
+}
