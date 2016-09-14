@@ -40,7 +40,7 @@ export default class ChangePassword extends Component {
       var user = JSON.stringify({
         username: username,
         password: this.state.oldPW
-      })
+      });
       fetch('http://localhost:3000/api/signin', {
         method: 'POST',
         headers: {
@@ -48,7 +48,11 @@ export default class ChangePassword extends Component {
         },
         body: user
       }).then(response => {
-        console.log('Valid password: ', response);
+        if (response.status === 200) {
+          this.updatePW(username, this.state.newPW);
+        } else {
+          console.log('Error: ', response.json());
+        }
       }).catch(err => {
         console.log('Error: ', err);
       })
@@ -56,7 +60,24 @@ export default class ChangePassword extends Component {
   }
 
   updatePW(username, newPassword) {
-    
+    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      var user = JSON.stringify({
+        username: username,
+        password: newPassword
+      });
+      fetch('http://localhost:3000/api/users', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: user
+      }).then(response => {
+        console.log('Password updated: ', response);
+      }).catch(err => {
+        console.log('Failed updating: ', err);
+      })
+    })
   }
 
   render() {
@@ -72,6 +93,7 @@ export default class ChangePassword extends Component {
         <TextInput 
           type='TextInput'
           secureTextEntry={ true }
+          onChangeText={ (text) => this.updateNewPW(text) }
           style={ styles.textinput }></TextInput>
         <TouchableHighlight 
           onPress={ () => this.checkOldPW() } 
