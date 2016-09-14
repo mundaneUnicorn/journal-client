@@ -21,6 +21,24 @@ export default class ChangePassword extends Component {
     }
   }
 
+  updateOldPW(val) {
+    this.setState({
+      oldPW: val
+    })
+  }
+
+  updateNewPW(val) {
+    this.setState({
+      newPW: val
+    })
+  }
+
+  checkOldPW() {
+    AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
+      /* check is the password matches */
+    })
+  }
+
   render() {
     return (
       <View style={ styles.container }>
@@ -34,7 +52,10 @@ export default class ChangePassword extends Component {
           type='TextInput'
           secureTextEntry={ true }
           style={ styles.textinput }></TextInput>
-        <TouchableHighlight style={ styles.button }>
+        <TouchableHighlight 
+          onPress={ () => console.log('clicked') } 
+          underlayColor='#218c23' 
+          style={ styles.button }>
           <Text style={ styles.submit }>Submit</Text>
         </TouchableHighlight>
       </View>

@@ -32,7 +32,6 @@ export default class SettingsTab extends Component {
   }
 
   render() {
-    console.log('signout tab');
 
    return (
     <View style={ styles.container }>
