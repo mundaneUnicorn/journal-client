@@ -38,8 +38,14 @@ export default class Entry extends Component {
             user: props.user,
             entryId: props.id, 
           }),
+        }).then(function (response) {
+          this.render();
+        }).catch(function (error) {
+          this.render();
         });
       });
+
+
     };
   }
 
