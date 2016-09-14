@@ -27,12 +27,15 @@ export default class Entry extends Component {
     super(props);
     this.props = props;
     this.state = {
-      likes: props.rating,
+      votes: props.votes,
     };
     
-    var context = this;
+    var entryContext = this;
     this.likePost = () => {
-      AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      
+      var token;
+      var user;
+      var queryServer = () => {
         fetch('http://localhost:3000/api/likes', {
           method: 'POST',
           headers: {
@@ -40,14 +43,38 @@ export default class Entry extends Component {
             'x-access-token': token,
           },
           body: JSON.stringify({ 
-            user: props.user,
+            user: user,
             entryId: props.id, 
           }),
         }).then(function (response) {
-          context.setState({likes: context.state.likes + 1});
+          var votesArray = entryContext.state.votes;
+          var userIndex = votesArray.indexOf(user);
+          if (userIndex === -1) {
+            votesArray.push(user);
+          } else {
+            votesArray.splice(userIndex, 1);
+          }
+          entryContext.setState({ votes: votesArray });
         }).catch(function (error) {
           console.log(error);
         });
+      };
+
+      var queryCounter = 0;
+      AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
+        queryCounter++;
+        token = retrievedToken;
+        if (queryCounter >= 2) {
+          queryServer();
+        }
+      });
+
+      AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
+        queryCounter++;
+        user = username;
+        if (queryCounter >= 2) {
+          queryServer();
+        }
       });
     };
   }
@@ -69,7 +96,7 @@ export default class Entry extends Component {
               { this.props.text }     
             </Text>
             <Text style={ styles.rating } onPress={ this.likePost }>
-              Rating:{ this.state.likes }
+              Rating:{ this.state.votes.length }
             </Text>
           </View>
         </View>
