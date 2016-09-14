@@ -31,6 +31,7 @@ var likePost = function () {
         'content-type': 'application/json',
         'x-access-token': token,
       }
+      body: JSON.stringify(props.id),
     });
   });
 
