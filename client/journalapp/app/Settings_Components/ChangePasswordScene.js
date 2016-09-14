@@ -55,6 +55,10 @@ export default class ChangePassword extends Component {
     })
   }
 
+  updatePW(username, newPassword) {
+    
+  }
+
   render() {
     return (
       <View style={ styles.container }>
