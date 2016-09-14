@@ -26,9 +26,6 @@ export default class Entry extends Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.state = {
-      votes: props.votes,
-    };
     
     var entryContext = this;
     this.likePost = () => {
@@ -47,14 +44,14 @@ export default class Entry extends Component {
             entryId: props.id, 
           }),
         }).then(function (response) {
-          var votesArray = entryContext.state.votes;
+          var votesArray = entryContext.props.votes;
           var userIndex = votesArray.indexOf(user);
           if (userIndex === -1) {
             votesArray.push(user);
           } else {
             votesArray.splice(userIndex, 1);
           }
-          entryContext.setState({ votes: votesArray });
+          entryContext.forceUpdate();
         }).catch(function (error) {
           console.log(error);
         });
@@ -96,7 +93,7 @@ export default class Entry extends Component {
               { this.props.text }     
             </Text>
             <Text style={ styles.rating } onPress={ this.likePost }>
-              Rating:{ this.state.votes.length }
+              Rating:{ this.props.votes.length }
             </Text>
           </View>
         </View>
