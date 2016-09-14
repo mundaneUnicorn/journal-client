@@ -26,7 +26,12 @@ export default class Entry extends Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.likePost = function () {
+    this.state = {
+      likes: props.rating,
+    };
+    
+    var context = this;
+    this.likePost = () => {
       AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
         fetch('http://localhost:3000/api/likes', {
           method: 'POST',
@@ -39,13 +44,11 @@ export default class Entry extends Component {
             entryId: props.id, 
           }),
         }).then(function (response) {
-          this.render();
+          context.setState({likes: context.state.likes + 1});
         }).catch(function (error) {
-          this.render();
+          console.log(error);
         });
       });
-
-
     };
   }
 
@@ -66,7 +69,7 @@ export default class Entry extends Component {
               { this.props.text }     
             </Text>
             <Text style={ styles.rating } onPress={ this.likePost }>
-              Rating:{ this.props.rating }
+              Rating:{ this.state.likes }
             </Text>
           </View>
         </View>
