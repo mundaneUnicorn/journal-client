@@ -14,9 +14,10 @@ import styles from '../styles/EntryListStyles';
 var EntryList = ({entries}) => (
     <ListView style ={styles.container}
        dataSource={entries}
-       renderRow={ (rowData) =>
-          <Entry id={ rowData.id } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } location={ rowData.location }/>
-        }/>
+       renderRow={ (rowData) => {
+
+          return (<Entry id={ rowData.id } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } location={ rowData.location }/>)
+       }}/>
 )
 
 module.exports = EntryList;
