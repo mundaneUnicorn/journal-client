@@ -18,7 +18,8 @@ export default class ChangePassword extends Component {
 
     this.state = {
       oldPW: '',
-      newPW: ''
+      newPW: '',
+      successful: false
     }
   }
 
@@ -34,9 +35,17 @@ export default class ChangePassword extends Component {
     })
   }
 
+  showMessage() {
+    if (this.state.successful) {
+      return (
+        <Text style={ styles.message }>Password successfully changed</Text>
+      )
+    }
+  }
+
   checkOldPW() {
     AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
-      /* check is the password matches */
+      /* check if the password matches */
       var user = JSON.stringify({
         username: username,
         password: this.state.oldPW
@@ -74,6 +83,11 @@ export default class ChangePassword extends Component {
         body: user
       }).then(response => {
         console.log('Password updated: ', response);
+        if (response.status === 204) {
+          this.setState({ successful: true });
+        } else {
+          this.setState({ successful: false });
+        }
       }).catch(err => {
         console.log('Failed updating: ', err);
       })
@@ -101,6 +115,7 @@ export default class ChangePassword extends Component {
           style={ styles.button }>
           <Text style={ styles.submit }>Submit</Text>
         </TouchableHighlight>
+        { this.showMessage() }
       </View>
     )
   }

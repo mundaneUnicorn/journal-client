@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginTop: 60,
     paddingTop: 20,
-    backgroundColor: '#f5f6f6'
+    backgroundColor: '#f5f6f6',
   },
   label: {
     fontSize: 16,
@@ -51,8 +51,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 20,
-    color: 'black',
+    color: 'white',
     fontWeight: '500'
+  },
+  message: {
+    height: 22,
+    color: 'black',
+    fontWeight: '500',
+    marginTop: 15,
+    alignSelf: 'center'
   }
 })
 
