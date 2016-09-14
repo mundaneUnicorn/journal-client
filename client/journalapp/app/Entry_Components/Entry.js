@@ -11,8 +11,6 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-import Swipeout from 'react-native-swipeout';
-
 import styles from '../styles/EntryStyles';
 
 var parseDate = (date) => {
@@ -29,15 +27,12 @@ export default class Entry extends Component {
     super(props);
     this.props = props;
     this.state = {
-      votes: props.votes,
+      likes: props.rating,
     };
     
-    var entryContext = this;
+    var context = this;
     this.likePost = () => {
-      
-      var token;
-      var user;
-      var queryServer = () => {
+      AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
         fetch('http://localhost:3000/api/likes', {
           method: 'POST',
           headers: {
@@ -45,38 +40,14 @@ export default class Entry extends Component {
             'x-access-token': token,
           },
           body: JSON.stringify({ 
-            user: user,
+            user: props.user,
             entryId: props.id, 
           }),
         }).then(function (response) {
-          var votesArray = entryContext.state.votes;
-          var userIndex = votesArray.indexOf(user);
-          if (userIndex === -1) {
-            votesArray.push(user);
-          } else {
-            votesArray.splice(userIndex, 1);
-          }
-          entryContext.setState({ votes: votesArray });
+          context.setState({likes: context.state.likes + 1});
         }).catch(function (error) {
           console.log(error);
         });
-      };
-
-      var queryCounter = 0;
-      AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
-        queryCounter++;
-        token = retrievedToken;
-        if (queryCounter >= 2) {
-          queryServer();
-        }
-      });
-
-      AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
-        queryCounter++;
-        user = username;
-        if (queryCounter >= 2) {
-          queryServer();
-        }
       });
     };
   }
@@ -98,7 +69,7 @@ export default class Entry extends Component {
               { this.props.text }     
             </Text>
             <Text style={ styles.rating } onPress={ this.likePost }>
-              Rating:{ this.state.votes.length }
+              Rating:{ this.state.likes }
             </Text>
           </View>
         </View>
