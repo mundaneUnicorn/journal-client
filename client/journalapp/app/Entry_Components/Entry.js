@@ -30,7 +30,7 @@ export default class Entry extends Component {
       likes: props.votes.length,
     };
     
-    var context = this;
+    var entryContext = this;
     this.likePost = () => {
       
       var token;
@@ -48,7 +48,7 @@ export default class Entry extends Component {
           }),
         }).then(function (response) {
           response.json().then(function (json) {
-            context.setState({likes: Number(json)});
+            entryContext.setState({likes: Number(json)});
           });
         }).catch(function (error) {
           console.log(error);
