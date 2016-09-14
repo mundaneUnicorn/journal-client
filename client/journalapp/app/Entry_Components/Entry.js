@@ -48,7 +48,7 @@ export default class Entry extends Component {
           }),
         }).then(function (response) {
           response.json().then(function (json) {
-            context.setState({likes: context.state.likes + Number(json)});
+            context.setState({likes: Number(json)});
           });
         }).catch(function (error) {
           console.log(error);
