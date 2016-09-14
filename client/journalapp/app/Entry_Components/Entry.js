@@ -11,6 +11,8 @@ import {
   AsyncStorage,
 } from 'react-native';
 
+import Swipeout from 'react-native-swipeout';
+
 import styles from '../styles/EntryStyles';
 
 var parseDate = (date) => {
