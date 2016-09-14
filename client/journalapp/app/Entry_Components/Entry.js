@@ -27,12 +27,15 @@ export default class Entry extends Component {
     super(props);
     this.props = props;
     this.state = {
-      likes: props.rating,
+      likes: props.votes.length,
     };
     
     var context = this;
     this.likePost = () => {
-      AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      
+      var token;
+      var user;
+      var queryServer = () => {
         fetch('http://localhost:3000/api/likes', {
           method: 'POST',
           headers: {
@@ -40,14 +43,33 @@ export default class Entry extends Component {
             'x-access-token': token,
           },
           body: JSON.stringify({ 
-            user: props.user,
+            user: user,
             entryId: props.id, 
           }),
         }).then(function (response) {
-          context.setState({likes: context.state.likes + 1});
+          response.json().then(function (json) {
+            context.setState({likes: context.state.likes + Number(json)});
+          });
         }).catch(function (error) {
           console.log(error);
         });
+      };
+
+      var queryCounter = 0;
+      AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
+        queryCounter++;
+        token = retrievedToken;
+        if (queryCounter >= 2) {
+          queryServer();
+        }
+      });
+
+      AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
+        queryCounter++;
+        user = username;
+        if (queryCounter >= 2) {
+          queryServer();
+        }
       });
     };
   }

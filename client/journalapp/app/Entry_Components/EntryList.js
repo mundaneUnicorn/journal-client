@@ -15,7 +15,7 @@ var EntryList = ({entries}) => (
     <ListView style ={styles.container}
        dataSource={entries}
        renderRow={ (rowData) =>
-          <Entry id={ rowData.id } rating={ rowData.rating } text={ rowData.text } createdAt={ rowData.createdAt } location={ rowData.location }/>
+          <Entry id={ rowData.id } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } location={ rowData.location }/>
         }/>
 )
 
