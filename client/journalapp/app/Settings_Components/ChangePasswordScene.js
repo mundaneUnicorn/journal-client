@@ -5,7 +5,8 @@ import {
   TextInput,
   View,
   Navigator,
-  TouchableHighlight
+  TouchableHighlight,
+  AsyncStorage
 } from 'react-native';
 
 import styles from '../styles/ChangePasswordSceneStyles';
@@ -36,6 +37,21 @@ export default class ChangePassword extends Component {
   checkOldPW() {
     AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
       /* check is the password matches */
+      var user = JSON.stringify({
+        username: username,
+        password: this.state.oldPW
+      })
+      fetch('http://localhost:3000/api/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: user
+      }).then(response => {
+        console.log('Valid password: ', response);
+      }).catch(err => {
+        console.log('Error: ', err);
+      })
     })
   }
 
@@ -46,6 +62,7 @@ export default class ChangePassword extends Component {
         <TextInput 
           type='TextInput'
           secureTextEntry={ true } 
+          onChangeText={ (text) => this.updateOldPW(text) } 
           style={ styles.textinput }></TextInput>
         <Text style={ styles.label }>New password: </Text>
         <TextInput 
@@ -53,7 +70,7 @@ export default class ChangePassword extends Component {
           secureTextEntry={ true }
           style={ styles.textinput }></TextInput>
         <TouchableHighlight 
-          onPress={ () => console.log('clicked') } 
+          onPress={ () => this.checkOldPW() } 
           underlayColor='#218c23' 
           style={ styles.button }>
           <Text style={ styles.submit }>Submit</Text>
