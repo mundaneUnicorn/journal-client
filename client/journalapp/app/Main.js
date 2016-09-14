@@ -20,6 +20,7 @@ import SettingsTab from './Settings_Components/SettingsTab';
 import FriendScene from './Friend_Components/FriendScene';
 import MessageScene from './Entry_Components/MessageScene';
 import SearchFriends from './Friend_Components/SearchFriends';
+import ChangePassword from './Settings_Components/ChangePasswordScene';
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -219,7 +220,10 @@ export default class Main extends Component {
           navigator={ navigator } />
       )
     } else if (route.title === 'PasswordScene') {
-      
+      return (
+        <ChangePassword
+          navigator={ navigator } />
+      )
     }
   }
 
