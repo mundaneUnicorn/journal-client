@@ -22,19 +22,6 @@ var parseDate = (date) => {
   }
 };
 
-var likePost = function (id) {
-  AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-    fetch('http://localhost:3000/api/likes', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-access-token': token,
-      },
-      body: JSON.stringify({ entryId: 'Whaddup?' }),
-    });
-  });
-};
-
 export default class Entry extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +34,10 @@ export default class Entry extends Component {
             'content-type': 'application/json',
             'x-access-token': token,
           },
-          body: JSON.stringify({ entryId: props.id }),
+          body: JSON.stringify({ 
+            user: props.user,
+            entryId: props.id, 
+          }),
         });
       });
     };
