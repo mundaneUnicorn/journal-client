@@ -44,6 +44,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color:"#424242",
   },
+  rating: {
+    justifyContent: 'flex-end',
+    fontSize: 12,
+    fontWeight: '500',
+    color:"#404040",
+  }
 });
 
 module.exports = styles;
