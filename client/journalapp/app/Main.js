@@ -20,6 +20,7 @@ import SettingsTab from './Settings_Components/SettingsTab';
 import FriendScene from './Friend_Components/FriendScene';
 import MessageScene from './Entry_Components/MessageScene';
 import SearchFriends from './Friend_Components/SearchFriends';
+import ChangePassword from './Settings_Components/ChangePasswordScene';
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -153,6 +154,7 @@ export default class Main extends Component {
                                                     navigator={navigator}
                                                     updateFriend={ this.updateFriend.bind(this) }/>;
     if (this.state.page === "SettingsTab") return <SettingsTab
+                                                    navigator={navigator} 
                                                     signOut={ this.props.signOut }/>;
   }
 
@@ -218,6 +220,11 @@ export default class Main extends Component {
         <SearchFriends
           navigator={ navigator } />
       )
+    } else if (route.title === 'PasswordScene') {
+      return (
+        <ChangePassword
+          navigator={ navigator } />
+      )
     }
   }
 
@@ -239,7 +246,7 @@ export default class Main extends Component {
             routeMapper={{
 
               LeftButton(route, navigator, index, navState) {
-                if ( route.title === 'FriendPage' || route.title === 'SearchFriends' ){
+                if ( route.title === 'FriendPage' || route.title === 'SearchFriends' || route.title === 'PasswordScene'){
                   return (
                     <View style={ styles.topBarView }>
                       <Text onPress={ ()=>{ navigator.pop() }} >
@@ -294,6 +301,10 @@ export default class Main extends Component {
                   return (<Text style={ styles.title }>{ this.state.friendName } </Text>);
                 } else if ( this.state.page === 'FriendsTab' ) {
                   return (<Text style={ styles.title }>{ 'Friends' }</Text>);
+                }
+
+                if (route.title === 'PasswordScene') {
+                  return (<Text style={ styles.title }>{ 'Password Change' }</Text>);
                 }
 
                 // Title views for the settings route.
