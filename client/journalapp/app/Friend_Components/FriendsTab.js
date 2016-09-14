@@ -53,7 +53,7 @@ export default class FriendsTab extends Component {
           };
         })
         .catch((error) => {
-          console.warn("error on json():", error)
+          console.log("error on json():", error)
         });
       })
       .catch( error => {
@@ -80,7 +80,7 @@ export default class FriendsTab extends Component {
           this.setState({ pendingRequests: json });
         })
         .catch((error) => {
-          console.warn("fetch error on getrequest:", error)
+          console.log("fetch error on getrequest:", error)
         });
       });
     });
@@ -103,7 +103,7 @@ export default class FriendsTab extends Component {
           this.getFriends();
         })
           .catch((error) => {
-            console.warn("fetch error:", error)
+            console.log("fetch error:", error)
           });
     });
   }
@@ -124,7 +124,7 @@ export default class FriendsTab extends Component {
           this.getFriendRequests();
         })
           .catch((error) => {
-            console.warn("fetch error:", error)
+            console.log("fetch error:", error)
           });
     });
   }

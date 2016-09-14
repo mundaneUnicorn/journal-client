@@ -111,7 +111,7 @@ export default class Main extends Component {
           })
         })
         .catch((error) => {
-          console.warn("fetch error on getrequest:", error)
+          console.log("fetch error on getrequest:", error)
         });
       });
     });
@@ -136,7 +136,7 @@ export default class Main extends Component {
           navigator.pop();
         })
           .catch((error) => {
-            console.warn("fetch error:", error)
+            console.log("fetch error:", error)
           });
     });
   }

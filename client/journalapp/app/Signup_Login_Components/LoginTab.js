@@ -52,7 +52,7 @@ export default class LoginTab extends Component {
           } else {
             try {
               AsyncStorage.multiSet([['@MySuperStore:token', json.token], ['@MySuperStore:username', this.state.username]], (err) => {
-                if ( err ){ console.warn(err); }
+                if ( err ){ console.log(err); }
                 this.props.updateStatus(true);
               });
             } catch (error) {
