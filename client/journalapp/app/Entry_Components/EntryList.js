@@ -27,9 +27,9 @@ var EntryList = ({entries, rerender, userEntries}) => (
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
-                  'x-access-token': token
+                  'x-access-token': token,
                 },
-                data: JSON.stringify({ id: rowData.id })
+                body: JSON.stringify({ id: rowData.id })
               }).then(response => {
                 console.log('Message deleting entry: ', response);
                 if (userEntries) {
