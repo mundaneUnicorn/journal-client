@@ -28,10 +28,12 @@ export default class Entry extends Component {
   constructor(props) {
     super(props);
     this.props = props;
-  };
-    
-  var context = this;
-  this.likePost = () => {
+    this.entryContext = this;
+    this.likePost = () => {
+    };
+  }
+  
+  likePost() {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       fetch('http://localhost:3000/api/likes', {
         method: 'POST',
@@ -44,19 +46,19 @@ export default class Entry extends Component {
           entryId: props.id, 
         }),
       }).then(function (response) {
-        var votesArray = entryContext.props.votes;
+        var votesArray = this.entryContext.props.votes;
         var userIndex = votesArray.indexOf(user);
         if (userIndex === -1) {
           votesArray.push(user);
         } else {
           votesArray.splice(userIndex, 1);
         }
-        entryContext.forceUpdate();
+        this.entryContext.forceUpdate();
       }).catch(function (error) {
         console.log(error);
       });
     });
-  };
+  }
 
   render() {
     return (
