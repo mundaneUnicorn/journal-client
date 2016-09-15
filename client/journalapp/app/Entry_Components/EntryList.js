@@ -42,7 +42,7 @@ var EntryList = ({entries, rerender, userEntries}) => (
           }
         }]
         return userEntries ? (
-          <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent' style={styles.container}>
+          <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
             <Entry id={ rowData.id } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } location={ rowData.location }/>
           </Swipeout>
         ) : (<Entry id={ rowData.id } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } location={ rowData.location }/>)
