@@ -45,7 +45,7 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator}) => (
           <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
             <Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
           </Swipeout>
-        ) : (<Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location } navigator={ navigator }/>)
+        ) : (<Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ true } location={ rowData.location } navigator={ navigator }/>)
       }}/>
 )
 

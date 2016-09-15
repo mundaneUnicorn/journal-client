@@ -42,7 +42,6 @@ export default class Entry extends Component {
 
   likePost() {
     var entryContext = this;
-    console.log(this.props);
     fetch('http://localhost:3000/api/likes', {
       method: 'POST',
       headers: {
