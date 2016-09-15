@@ -39,6 +39,7 @@ export default class Journalapp extends Component {
   }
 
   render() {
+    console.disableYellowBox = true;
     return this.state.loggedIn ?
     (<Main signOut={ this.signOut.bind(this) }/>) :
     (<AuthParent updateStatus={this.updateStatus.bind(this)}/>)
