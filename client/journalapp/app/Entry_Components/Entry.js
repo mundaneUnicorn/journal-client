@@ -28,54 +28,36 @@ export default class Entry extends Component {
   constructor(props) {
     super(props);
     this.props = props;
-    
-    var entryContext = this;
+    this.entryContext = this;
     this.likePost = () => {
-      
-      var token;
-      var user;
-      var queryServer = () => {
-        fetch('http://localhost:3000/api/likes', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            'x-access-token': token,
-          },
-          body: JSON.stringify({ 
-            user: user,
-            entryId: props.id, 
-          }),
-        }).then(function (response) {
-          var votesArray = entryContext.props.votes;
-          var userIndex = votesArray.indexOf(user);
-          if (userIndex === -1) {
-            votesArray.push(user);
-          } else {
-            votesArray.splice(userIndex, 1);
-          }
-          entryContext.forceUpdate();
-        }).catch(function (error) {
-          console.log(error);
-        });
-      };
-
-      var queryCounter = 0;
-      AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
-        queryCounter++;
-        token = retrievedToken;
-        if (queryCounter >= 2) {
-          queryServer();
-        }
-      });
-
-      AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
-        queryCounter++;
-        user = username;
-        if (queryCounter >= 2) {
-          queryServer();
-        }
-      });
     };
+  }
+  
+  likePost() {
+    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      fetch('http://localhost:3000/api/likes', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': token,
+        },
+        body: JSON.stringify({ 
+          user: props.user,
+          entryId: props.id, 
+        }),
+      }).then(function (response) {
+        var votesArray = this.entryContext.props.votes;
+        var userIndex = votesArray.indexOf(user);
+        if (userIndex === -1) {
+          votesArray.push(user);
+        } else {
+          votesArray.splice(userIndex, 1);
+        }
+        this.entryContext.forceUpdate();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    });
   }
 
   render() {
