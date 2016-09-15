@@ -46,19 +46,25 @@ const styles = StyleSheet.create({
     paddingRight: 30,
   },
   ratingContainer: {
+    backgroundColor: '#fafafa',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignSelf: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   rating: {
+    justifyContent: 'center',
+    alignSelf: 'center',
     fontSize: 12,
     fontWeight: '500',
-    alignSelf: 'flex-end',
     color:"#404040",
   },
   image: {
     justifyContent: 'center',
     height: 20,
     width: 21,
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
   },
 });
 
