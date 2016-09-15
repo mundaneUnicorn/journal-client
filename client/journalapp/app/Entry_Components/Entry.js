@@ -28,54 +28,48 @@ export default class Entry extends Component {
   constructor(props) {
     super(props);
     this.props = props;
+    this.user;
+    this.token;
 
     var entryContext = this;
     this.likePost = () => {
-      
-      var token;
-      var user;
-      var queryServer = () => {
-        fetch('http://localhost:3000/api/likes', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            'x-access-token': token,
-          },
-          body: JSON.stringify({ 
-            user: user,
-            entryId: props.id, 
-          }),
-        }).then(function (response) {
-          var votesArray = entryContext.props.votes;
-          var userIndex = votesArray.indexOf(user);
-          if (userIndex === -1) {
-            votesArray.push(user);
-          } else {
-            votesArray.splice(userIndex, 1);
-          }
-          entryContext.forceUpdate();
-        }).catch(function (error) {
-          console.log(error);
-        });
-      };
-
-      var queryCounter = 0;
-      AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
-        queryCounter++;
-        token = retrievedToken;
-        if (queryCounter >= 2) {
-          queryServer();
+      fetch('http://localhost:3000/api/likes', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': entryContext.token,
+        },
+        body: JSON.stringify({ 
+          user: entryContext.user,
+          entryId: props.id, 
+        }),
+      }).then(function (response) {
+        var votesArray = entryContext.props.votes;
+        var userIndex = votesArray.indexOf(entryContext.user);
+        if (userIndex === -1) {
+          votesArray.push(entryContext.user);
+        } else {
+          votesArray.splice(userIndex, 1);
         }
-      });
-
-      AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
-        queryCounter++;
-        user = username;
-        if (queryCounter >= 2) {
-          queryServer();
-        }
+        entryContext.forceUpdate();
+      }).catch(function (error) {
+        console.log(error);
       });
     };
+  }
+
+  componentWillMount() {
+    var queryCounter = 0;
+    var entryContext = this;
+    AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
+      queryCounter++;
+      entryContext.token = retrievedToken;
+    });
+
+    AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
+      queryCounter++;
+      entryContext.user = username;
+    });
   }
 
   render() {
