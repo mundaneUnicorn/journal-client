@@ -94,12 +94,14 @@ export default class Entry extends Component {
               { this.props.text }     
             </Text>
             <Text style={ styles.rating } onPress={ this.likePost }>
-              { this.props.votes.length }
+              <Text style={ styles.rating }>
+                { this.props.votes.length }
+              </Text>
               <Image style={ styles.image } source={ require('../images/empty_heart.png') }></Image>
             </Text>
           </View>
         </View>
       </View>
-    )
+    );
   }
 }

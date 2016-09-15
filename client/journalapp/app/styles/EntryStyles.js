@@ -45,18 +45,21 @@ const styles = StyleSheet.create({
     color:"#424242",
     paddingRight: 30,
   },
+  ratingContainer: {
+    justifyContent: 'center',
+  },
   rating: {
-    justifyContent: 'flex-end',
     fontSize: 12,
     fontWeight: '500',
     alignSelf: 'flex-end',
     color:"#404040",
   },
   image: {
+    justifyContent: 'center',
     height: 20,
     width: 21,
     alignSelf: 'flex-end',
-  }
+  },
 });
 
 module.exports = styles;
