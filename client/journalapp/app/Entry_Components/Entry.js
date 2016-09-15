@@ -27,7 +27,7 @@ var parseDate = (date) => {
 var moddedStyle = {
   borderBottomWidth: 0.5,
   borderColor: '#cccccc',
-  paddingTop: 34,
+  paddingTop: 40,
   paddingBottom:12
 }
 
@@ -94,6 +94,20 @@ export default class Entry extends Component {
     }
   }
 
+  allowComments() {
+    if (this.props.friendPost) {
+      return (
+        <TouchableHighlight style={ styles.commentContainer } underlayColor='#dcdcdc' onPress={ this.addComment }>
+          <Text style={ styles.rating } style={{color: 'blue'}} >Comment</Text>
+        </TouchableHighlight>
+      )
+    }
+  }
+
+  addComment() {
+    console.log('yo dawg');
+  }
+
   render() {
     return (
       <View style={ this.state.entryStyle }>
@@ -110,15 +124,21 @@ export default class Entry extends Component {
             <Text style={ styles.entryText }>
               { this.props.text }     
             </Text>
-            <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost.bind(this) }>
-              <View style={ styles.ratingContainer }>
-                <Text style={ styles.rating }>
-                  { this.props.votes.length }
-                </Text> 
-                <Image style={ this.checkLikesForEmptyHeart() } source={require('../images/empty_heart.png')}></Image>
-                <Image style={ this.checkLikesForFullHeart() } source={require('../images/full_heart.png')}></Image>
-              </View>
-            </TouchableHighlight>
+
+            <View style={ styles.commentratingContainer }>
+            
+              { this.allowComments() }
+
+              <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost }>
+                <View style={ styles.ratingContainer }>
+                  <Text style={ styles.rating }>
+                    { this.props.votes.length }
+                  </Text>
+                  <Image style={ this.checkLikesForEmptyHeart() } source={require('../images/empty_heart.png')}></Image>
+                  <Image style={ this.checkLikesForFullHeart() } source={require('../images/full_heart.png')}></Image>
+                </View>
+              </TouchableHighlight>
+            </View>
           </View>
         </View>
       </View>
