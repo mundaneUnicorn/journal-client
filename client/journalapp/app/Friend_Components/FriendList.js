@@ -16,7 +16,6 @@ import styles from '../styles/FriendListStyles';
 var FriendList = (props) => {
 
   var deleteFriend = function(friend) {
-    console.log('FRIEND TO DELETE: ', friend);
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       fetch('http://localhost:3000/api/friends', {
         method: 'DELETE',
@@ -24,12 +23,12 @@ var FriendList = (props) => {
           'Content-Type': 'application/json',
           'x-access-token': token,
         },
-        body: JSON.stringify({ /* the friend to be deleted */ })
+        body: JSON.stringify(friend)
       }).then(response => {
-
-        /* RERENDER THE PAGE */
-        console.log('DELETING FRIEND RESPONSE: ', response.json());
-
+        if(response.status !== 204) {
+          console.log('Warning: an error may have occured', response);
+        }
+        props.rerender();
       }).catch(err => {
         console.log('Error deleting friend: ', err);
       })
@@ -46,14 +45,15 @@ var FriendList = (props) => {
             text: 'Delete',
             backgroundColor: 'red',
             onPress: () => deleteFriend(friend)
-          }]} autoClose='true' backgroundColor='transparent'>
+          }]} autoClose='true' backgroundColor='transparent' key={ friend.id } >
             <Friend
             key={ friend.id }
             username={ friend.username }
             fullname={ friend.fullname }
             id={ friend.id }
             navigator={ props.navigator }
-            updateFriend={ props.updateFriend }/>
+            updateFriend={ props.updateFriend }
+            rerender={ props.rerender } />
           </Swipeout>
           );
       }) }
