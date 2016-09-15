@@ -30,7 +30,7 @@ export default class Entry extends Component {
     this.props = props;
     this.user;
     this.token;
-    this.full = styles.hideImage;
+    this.full = styles.showImage;
     this.empty = styles.showImage;
 
     var entryContext = this;
@@ -65,16 +65,23 @@ export default class Entry extends Component {
   }
 
   componentWillMount() {
-    var queryCounter = 0;
     var entryContext = this;
     AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
-      queryCounter++;
       entryContext.token = retrievedToken;
     });
 
     AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
-      queryCounter++;
       entryContext.user = username;
+      var userIndex = entryContext.props.votes.indexOf(username);
+      if (userIndex === -1) {
+        entryContext.full = styles.hideImage;
+        entryContext.empty = styles.showImage;
+        entryContext.forceUpdate();
+      } else {
+        entryContext.full = styles.showImage;
+        entryContext.empty = styles.hideImage;
+        entryContext.forceUpdate();
+      }
     });
   }
 

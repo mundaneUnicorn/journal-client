@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   showImage: {
     justifyContent: 'center',
     height: 20,
-    width: 21,
+    width: 21.5,
     alignSelf: 'center',
     marginLeft: 2,
   },
