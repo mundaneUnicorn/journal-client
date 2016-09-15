@@ -95,7 +95,7 @@ export default class Entry extends Component {
             </Text>
             <Text style={ styles.rating } onPress={ this.likePost }>
               { this.props.votes.length }
-              <Image style={ styles.image } source={ require('../images/full_heart.png') }></Image>
+              <Image style={ styles.image } source={ require('../images/empty_heart.png') }></Image>
             </Text>
           </View>
         </View>

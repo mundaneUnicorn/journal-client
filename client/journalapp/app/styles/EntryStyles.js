@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     color:"#424242",
+    paddingRight: 30,
   },
   rating: {
     justifyContent: 'flex-end',
@@ -52,8 +53,8 @@ const styles = StyleSheet.create({
     color:"#404040",
   },
   image: {
-    height: 30,
-    width: 30,
+    height: 20,
+    width: 21,
     alignSelf: 'flex-end',
   }
 });
