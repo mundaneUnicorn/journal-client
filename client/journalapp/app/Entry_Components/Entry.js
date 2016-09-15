@@ -28,13 +28,6 @@ export default class Entry extends Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.state = {
-      user: undefined,
-      token: undefined,
-      full: styles.hideImage,
-      empty: styles.showImage,
-    };
-
   }
 
   likePost() {
@@ -43,18 +36,18 @@ export default class Entry extends Component {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'x-access-token': entryContext.state.token,
+        'x-access-token': entryContext.props.token,
       },
       body: JSON.stringify({ 
-        user: entryContext.state.user,
+        user: entryContext.props.user,
         entryId: entryContext.props.id, 
       }),
     }).then(function (response) {
       var votesArray = entryContext.props.votes;
-      var userIndex = votesArray.indexOf(entryContext.state.user);
+      var userIndex = votesArray.indexOf(entryContext.props.user);
 
       if (userIndex === -1) {
-        votesArray.push(entryContext.state.user);
+        votesArray.push(entryContext.props.user);
         entryContext.setState({ 
           full: styles.showImage,
           empty: styles.hideImage,
@@ -72,8 +65,22 @@ export default class Entry extends Component {
     });
   }
 
-  componentWillMount() {
-    
+  checkLikesForFullHeart() {
+    var userIndex = this.props.votes.indexOf(this.props.user);
+    if (userIndex === -1) {
+      return styles.hideImage;
+    } else {
+      return styles.showImage;
+    }
+  }
+
+  checkLikesForEmptyHeart() {
+    var userIndex = this.props.votes.indexOf(this.props.user);
+    if (userIndex === -1) {
+      return styles.showImage;
+    } else {
+      return styles.hideImage;
+    }
   }
 
   render() {
@@ -97,8 +104,8 @@ export default class Entry extends Component {
                 <Text style={ styles.rating }>
                   { this.props.votes.length }
                 </Text> 
-                <Image style={ this.state.empty } source={require('../images/empty_heart.png')}></Image>
-                <Image style={ this.state.full } source={require('../images/full_heart.png')}></Image>
+                <Image style={ this.checkLikesForEmptyHeart() } source={require('../images/empty_heart.png')}></Image>
+                <Image style={ this.checkLikesForFullHeart() } source={require('../images/full_heart.png')}></Image>
               </View>
             </TouchableHighlight>
           </View>
