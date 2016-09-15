@@ -60,10 +60,17 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color:"#404040",
   },
-  image: {
+  showImage: {
     justifyContent: 'center',
     height: 20,
-    width: 21,
+    width: 21.5,
+    alignSelf: 'center',
+    marginLeft: 2,
+  },
+  hideImage: {
+    justifyContent: 'center',
+    height: 0,
+    width: 0,
     alignSelf: 'center',
     marginLeft: 2,
   },

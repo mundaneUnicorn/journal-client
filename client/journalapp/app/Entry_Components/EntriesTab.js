@@ -25,6 +25,22 @@ export default class EntriesTab extends Component {
   constructor(props) {
     super(props);
     this.props = props;
+    this.state = ({
+      user: undefined,
+      token: undefined,
+    });
+  }
+
+  componentWillMount() {
+    var entryTabContext = this;
+
+    AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
+      entryTabContext.setState({ token: retrievedToken });
+    });
+
+    AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
+      entryTabContext.setState({ user: username });
+    });
   }
 
   componentDidMount() {
@@ -46,7 +62,7 @@ export default class EntriesTab extends Component {
             <Image style={ styles.tabbarimage } source={require('./../images/Pen_Icon.png')}/>
           </Button>
         </View>
-        <EntryList entries={ this.props.entries } rerender={ this.props.rerender } userEntries={ true } />
+        <EntryList user={ this.state.user } token={ this.state.token } entries={ this.props.entries } rerender={ this.props.rerender } userEntries={ true } />
       </View>
 
      )

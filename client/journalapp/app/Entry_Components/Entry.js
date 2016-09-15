@@ -28,54 +28,60 @@ export default class Entry extends Component {
   constructor(props) {
     super(props);
     this.props = props;
+  }
 
+  likePost() {
     var entryContext = this;
-    this.likePost = () => {
-      
-      var token;
-      var user;
-      var queryServer = () => {
-        fetch('http://localhost:3000/api/likes', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            'x-access-token': token,
-          },
-          body: JSON.stringify({ 
-            user: user,
-            entryId: props.id, 
-          }),
-        }).then(function (response) {
-          var votesArray = entryContext.props.votes;
-          var userIndex = votesArray.indexOf(user);
-          if (userIndex === -1) {
-            votesArray.push(user);
-          } else {
-            votesArray.splice(userIndex, 1);
-          }
-          entryContext.forceUpdate();
-        }).catch(function (error) {
-          console.log(error);
+    console.log(this.props);
+    fetch('http://localhost:3000/api/likes', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-access-token': entryContext.props.token,
+      },
+      body: JSON.stringify({ 
+        user: entryContext.props.user,
+        entryId: entryContext.props.id, 
+      }),
+    }).then(function (response) {
+      var votesArray = entryContext.props.votes;
+      var userIndex = votesArray.indexOf(entryContext.props.user);
+
+      if (userIndex === -1) {
+        votesArray.push(entryContext.props.user);
+        entryContext.setState({ 
+          full: styles.showImage,
+          empty: styles.hideImage,
         });
-      };
+      } else {
+        votesArray.splice(userIndex, 1);
+        entryContext.setState({ 
+          full: styles.hideImage,
+          empty: styles.showImage,
+        });
+      }
+      entryContext.forceUpdate();
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
 
-      var queryCounter = 0;
-      AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
-        queryCounter++;
-        token = retrievedToken;
-        if (queryCounter >= 2) {
-          queryServer();
-        }
-      });
+  checkLikesForFullHeart() {
+    var userIndex = this.props.votes.indexOf(this.props.user);
+    if (userIndex === -1) {
+      return styles.hideImage;
+    } else {
+      return styles.showImage;
+    }
+  }
 
-      AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
-        queryCounter++;
-        user = username;
-        if (queryCounter >= 2) {
-          queryServer();
-        }
-      });
-    };
+  checkLikesForEmptyHeart() {
+    var userIndex = this.props.votes.indexOf(this.props.user);
+    if (userIndex === -1) {
+      return styles.showImage;
+    } else {
+      return styles.hideImage;
+    }
   }
 
   render() {
@@ -94,12 +100,13 @@ export default class Entry extends Component {
             <Text style={ styles.entryText }>
               { this.props.text }     
             </Text>
-            <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost }>
+            <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost.bind(this) }>
               <View style={ styles.ratingContainer }>
                 <Text style={ styles.rating }>
                   { this.props.votes.length }
-                </Text>
-                <Image style={ styles.image } source={ require('../images/empty_heart.png') }></Image>
+                </Text> 
+                <Image style={ this.checkLikesForEmptyHeart() } source={require('../images/empty_heart.png')}></Image>
+                <Image style={ this.checkLikesForFullHeart() } source={require('../images/full_heart.png')}></Image>
               </View>
             </TouchableHighlight>
           </View>
