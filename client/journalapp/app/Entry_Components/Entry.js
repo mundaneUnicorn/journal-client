@@ -30,6 +30,8 @@ export default class Entry extends Component {
     this.props = props;
     this.user;
     this.token;
+    this.full = styles.hideImage;
+    this.empty = styles.showImage;
 
     var entryContext = this;
     this.likePost = () => {
@@ -48,8 +50,12 @@ export default class Entry extends Component {
         var userIndex = votesArray.indexOf(entryContext.user);
         if (userIndex === -1) {
           votesArray.push(entryContext.user);
+          entryContext.full = styles.showImage;
+          entryContext.empty = styles.hideImage;
         } else {
           votesArray.splice(userIndex, 1);
+          entryContext.full = styles.hideImage;
+          entryContext.empty = styles.showImage;
         }
         entryContext.forceUpdate();
       }).catch(function (error) {
@@ -92,8 +98,9 @@ export default class Entry extends Component {
               <View style={ styles.ratingContainer }>
                 <Text style={ styles.rating }>
                   { this.props.votes.length }
-                </Text>
-                <Image style={ styles.image } source={ require('../images/empty_heart.png') }></Image>
+                </Text> 
+                <Image style={ this.empty } source={require('../images/empty_heart.png')}></Image>
+                <Image style={ this.full } source={require('../images/full_heart.png')}></Image>
               </View>
             </TouchableHighlight>
           </View>
