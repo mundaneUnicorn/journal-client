@@ -73,26 +73,7 @@ export default class Entry extends Component {
   }
 
   componentWillMount() {
-    var entryContext = this;
-    AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
-      entryContext.setState({ token: retrievedToken });
-    });
-
-    AsyncStorage.getItem('@MySuperStore:username', (err, username) => {
-      entryContext.setState({ user: username });
-      var userIndex = entryContext.props.votes.indexOf(username);
-      if (userIndex === -1) {
-        entryContext.setState({ 
-          full: styles.hideImage,
-          empty: styles.showImage,
-        });
-      } else {
-        entryContext.setState({ 
-          full: styles.showImage,
-          empty: styles.hideImage,
-        });
-      }
-    });
+    
   }
 
   render() {
