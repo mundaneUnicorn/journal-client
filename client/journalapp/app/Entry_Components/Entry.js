@@ -105,7 +105,6 @@ export default class Entry extends Component {
   }
 
   addComment() {
-    // console.log(this.props);
     this.props.navigator.push({ title: 'CommentScene' })
   }
 

@@ -254,7 +254,7 @@ export default class Main extends Component {
             routeMapper={{
 
               LeftButton(route, navigator, index, navState) {
-                if ( route.title === 'FriendPage' || route.title === 'SearchFriends' || route.title === 'PasswordScene'){
+                if ( route.title === 'FriendPage' || route.title === 'SearchFriends' || route.title === 'PasswordScene' || route.title === 'CommentScene'){
                   return (
                     <View style={ styles.topBarView }>
                       <Text onPress={ ()=>{ navigator.pop() }} >
@@ -274,7 +274,7 @@ export default class Main extends Component {
               },
 
               RightButton: (route, navigator, index, navState) => {
-                if ( this.state.page === 'FriendsTab' && route.title !== 'SearchFriends' && route.title !== 'FriendPage'){
+                if ( this.state.page === 'FriendsTab' && route.title !== 'SearchFriends' && route.title !== 'FriendPage' && route.title !== 'CommentScene'){
                   return (
                     <View style={ [styles.topBarView, styles.rightArrow] }>
                       <Text onPress={()=>{ navigator.push({title: 'SearchFriends'}) }} >
@@ -307,6 +307,8 @@ export default class Main extends Component {
                   return (<Text style={ styles.title }>{ 'Add Friends' }</Text>);
                 } else if ( route.title === 'FriendPage' ) {
                   return (<Text style={ styles.title }>{ this.state.friendName } </Text>);
+                } else if ( route.title === 'CommentScene' ) {
+                  return (<Text style={ styles.title }>{ `Add a comment` } </Text>);
                 } else if ( this.state.page === 'FriendsTab' ) {
                   return (<Text style={ styles.title }>{ 'Friends' }</Text>);
                 }
