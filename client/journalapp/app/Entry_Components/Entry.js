@@ -129,7 +129,7 @@ export default class Entry extends Component {
 
               { this.allowComments() }
 
-              <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost }>
+              <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost.bind(this) }>
                 <View style={ styles.ratingContainer }>
                   <Text style={ styles.rating }>
                     { this.props.votes.length }
