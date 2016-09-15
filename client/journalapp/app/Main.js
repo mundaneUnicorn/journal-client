@@ -149,6 +149,7 @@ export default class Main extends Component {
     if (this.state.page === "EntriesTab") return <EntriesTab
                                                     navigator={navigator}
                                                     getEntries={ this.getEntries.bind(this) }
+                                                    rerender={ () => this.getEntries() }
                                                     entries={ this.state.entries }/>;
     if (this.state.page === "FriendsTab") return <FriendsTab
                                                     navigator={navigator}
@@ -205,7 +206,8 @@ export default class Main extends Component {
       return (
         <FriendScene
           friendId={ route.friendId }
-          navigator={navigator} />
+          navigator={navigator}
+          rerender={ () => this.getEntries() } />
       )
     } else if (route.title === 'MessageScene') {
       return (
