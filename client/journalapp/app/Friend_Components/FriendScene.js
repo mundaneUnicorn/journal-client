@@ -19,12 +19,27 @@ export default class FriendScene extends Component {
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      entries: ds.cloneWithRows([])
+      entries: ds.cloneWithRows([]),
+      user: undefined,
+      token: undefined,
     }
   };
 
-  componentWillMount(){
-    this.getFriendPosts()
+  componentWillMount() {
+    this.getFriendPosts();
+
+    var friendSceneContext = this;
+    AsyncStorage.getItem('@MySuperStore:token', (err, retrievedToken) => {
+      friendSceneContext.setState({ token: retrievedToken });
+    });
+
+    AsyncStorage.getItem('@MySuperStore:username', (err, retrievedUser) => {
+      friendSceneContext.setState({ user: retrievedUser });
+    });
+  }
+
+  componentDidMount() {
+    this.getFriendPosts();
   }
 
   getFriendPosts(){
@@ -55,7 +70,7 @@ export default class FriendScene extends Component {
   render() {
     return (
       <View style = { styles.container }>
-        <EntryList entries={ this.state.entries }/>
+        <EntryList user={ this.state.user } token={ this.state.token } entries={ this.state.entries }/>
       </View>
     )
   }
