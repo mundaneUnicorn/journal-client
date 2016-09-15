@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderColor: '#cccccc',
     paddingTop: 12,
-    paddingBottom:12
+    paddingBottom:28
   },
   row: {
     flex: 1,

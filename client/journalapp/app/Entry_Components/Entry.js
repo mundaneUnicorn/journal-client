@@ -24,10 +24,20 @@ var parseDate = (date) => {
   }
 };
 
+var moddedStyle = {
+  borderBottomWidth: 0.5,
+  borderColor: '#cccccc',
+  paddingTop: 34,
+  paddingBottom:12
+}
+
 export default class Entry extends Component {
   constructor(props) {
     super(props);
     this.props = props;
+    this.state = {
+      entryStyle: props.friendPost ? moddedStyle : styles.container
+    }
   }
 
   likePost() {
@@ -86,7 +96,7 @@ export default class Entry extends Component {
 
   render() {
     return (
-      <View style={ styles.container }>
+      <View style={ this.state.entryStyle }>
         <View style={ styles.row }>
           <View style={ styles.rowHeader }>
             <Text style={ styles.date }>
