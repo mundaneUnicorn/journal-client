@@ -31,7 +31,6 @@ local.properties
 
 # node.js
 #
-node_modules/
 npm-debug.log
 
 # BUCK
@@ -39,3 +38,7 @@ buck-out/
 \.buckd/
 android/app/libs
 android/keystores/debug.keystore
+
+# include a single module
+node_modules/*
+!node_modules/react-native-swipeout
