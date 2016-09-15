@@ -22,9 +22,7 @@ export default class CommentScene extends Component {
   render() {
     return (
       <View style={{paddingTop:500}}>
-        <Text>
-          Well hello friends...
-        </Text>
+        <TextInput placeholder={ `Enter a comment...` } />
       </View>
     )
   }
