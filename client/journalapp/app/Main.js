@@ -21,6 +21,7 @@ import FriendScene from './Friend_Components/FriendScene';
 import MessageScene from './Entry_Components/MessageScene';
 import SearchFriends from './Friend_Components/SearchFriends';
 import ChangePassword from './Settings_Components/ChangePasswordScene';
+import CommentScene from './Entry_Components/CommentScene';
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -225,6 +226,11 @@ export default class Main extends Component {
     } else if (route.title === 'PasswordScene') {
       return (
         <ChangePassword
+          navigator={ navigator } />
+      )
+    } else if (route.title === 'CommentScene') {
+      return (
+        <CommentScene
           navigator={ navigator } />
       )
     }
