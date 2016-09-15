@@ -49,6 +49,7 @@ export default class FriendsTab extends Component {
       .then( resp => { resp.json()
         .then( json => {
           if (json.name !== 'SequelizeDatabaseError') {
+            console.log('HERE IS THE JSON FRIENDS: ', json);
             this.setState({ friendList: json })
           };
         })
@@ -59,7 +60,6 @@ export default class FriendsTab extends Component {
       .catch( error => {
         console.log("error on fetch()", error)
       });
-      ;
     });
   }
 
@@ -142,7 +142,8 @@ export default class FriendsTab extends Component {
           <FriendList 
             friendList={ this.state.friendList } 
             navigator={ this.props.navigator } 
-            updateFriend={ this.props.updateFriend }/>
+            updateFriend={ this.props.updateFriend }
+            rerender={ () => this.getFriends() } />
         </ScrollView>
       </View>
     )
