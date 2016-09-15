@@ -48,7 +48,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     fontSize: 12,
     fontWeight: '500',
+    alignSelf: 'flex-end',
     color:"#404040",
+  },
+  image: {
+    height: 30,
+    width: 30,
+    alignSelf: 'flex-end',
   }
 });
 

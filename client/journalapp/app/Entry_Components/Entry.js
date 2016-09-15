@@ -9,6 +9,7 @@ import {
   View,
   Dimensions,
   AsyncStorage,
+  Image,
 } from 'react-native';
 
 import styles from '../styles/EntryStyles';
@@ -93,7 +94,8 @@ export default class Entry extends Component {
               { this.props.text }     
             </Text>
             <Text style={ styles.rating } onPress={ this.likePost }>
-              Rating:{ this.props.votes.length }
+              { this.props.votes.length }
+              <Image style={ styles.image } source={ require('../images/full_heart.png') }></Image>
             </Text>
           </View>
         </View>
