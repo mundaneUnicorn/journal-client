@@ -9,6 +9,8 @@ import {
   View,
   Dimensions,
   AsyncStorage,
+  Image,
+  TouchableHighlight,
 } from 'react-native';
 
 import styles from '../styles/EntryStyles';
@@ -92,12 +94,17 @@ export default class Entry extends Component {
             <Text style={ styles.entryText }>
               { this.props.text }     
             </Text>
-            <Text style={ styles.rating } onPress={ this.likePost }>
-              Rating:{ this.props.votes.length }
-            </Text>
+            <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost }>
+              <View style={ styles.ratingContainer }>
+                <Text style={ styles.rating }>
+                  { this.props.votes.length }
+                </Text>
+                <Image style={ styles.image } source={ require('../images/empty_heart.png') }></Image>
+              </View>
+            </TouchableHighlight>
           </View>
         </View>
       </View>
-    )
+    );
   }
 }

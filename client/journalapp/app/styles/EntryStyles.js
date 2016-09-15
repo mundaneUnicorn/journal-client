@@ -43,13 +43,30 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     color:"#424242",
+    paddingRight: 30,
+  },
+  ratingContainer: {
+    backgroundColor: '#fafafa',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   rating: {
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignSelf: 'center',
     fontSize: 12,
     fontWeight: '500',
     color:"#404040",
-  }
+  },
+  image: {
+    justifyContent: 'center',
+    height: 20,
+    width: 21,
+    alignSelf: 'center',
+    marginLeft: 2,
+  },
 });
 
 module.exports = styles;
