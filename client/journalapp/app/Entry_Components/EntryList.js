@@ -45,11 +45,23 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
         return userEntries ? (
           <View>
             <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
-              <Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
+              <Entry 
+                    id={ rowData.id } 
+                    author={ rowData.user } 
+                    entryFeed={ this.props.entryFeed } 
+                    user={ user } 
+                    token={ token } 
+                    votes={ rowData.votes } 
+                    text={ rowData.text } 
+                    createdAt={ rowData.createdAt } 
+                    friendPost={ false } 
+                    location={ rowData.location }/>
             </Swipeout>
           </View>
         ) : (<Entry
                  id={ rowData.id }
+                 author={ rowData.user } 
+                 entryFeed={ this.props.entryFeed } 
                  user={ user } 
                  token={ token } 
                  votes={ rowData.votes } 
