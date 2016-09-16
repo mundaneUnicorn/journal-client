@@ -157,6 +157,7 @@ export default class Main extends Component {
     if (this.state.page === "SettingsTab") return <SettingsTab
                                                     navigator={navigator} 
                                                     signOut={ this.props.signOut }/>;
+    if (this.state.page === 'FeedTab') return <Text>Under Construction!</Text>
   }
 
   // This logic applies routing according the title of the current route. It will be activated whenever the 
