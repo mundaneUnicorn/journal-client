@@ -81,7 +81,14 @@ export default class FeedTab extends Component {
     // the post new entry view. The onPress method of the Button here sets this off. 
     return (
       <View style={ styles.container }>
-        <EntryList user={ this.state.user } token={ this.state.token } entries={ this.state.entries } rerender={ this.getAllFriendsPosts.bind(this) } entryFeed={ true } userEntries={ false } />
+        <EntryList 
+            navigator={ this.props.navigator } 
+            updatePostId={ this.props.updatePostId } 
+            user={ this.state.user } 
+            token={ this.state.token } 
+            entries={ this.state.entries } 
+            rerender={ this.getAllFriendsPosts.bind(this) } 
+            userEntries={ false } />
       </View>
 
      )

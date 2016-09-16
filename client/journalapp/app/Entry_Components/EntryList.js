@@ -5,7 +5,7 @@ import {
   TextInput,
   ListView,
   View,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 
 // VB: Refactored require to use import, for consistency
@@ -49,7 +49,6 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
                     navigator={ navigator } 
                     id={ rowData.id } 
                     author={ rowData.user } 
-                    entryFeed={ this.props.entryFeed } 
                     user={ user } 
                     token={ token } 
                     votes={ rowData.votes } 
@@ -69,9 +68,8 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
                  createdAt={ rowData.createdAt } 
                  friendPost={ true } 
                  location={ rowData.location } 
-                 updateText={ updateText } 
                  updatePostID={ updatePostID }
-                 navigator={ navigator }/>)
+                 navigator={ navigator }/>);
       }}/>
 )
 
