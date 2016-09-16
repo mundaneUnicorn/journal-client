@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import Tabs from 'react-native-tabs';
+import FeedTab from './Feed_Components/FeedTab'
 import EntriesTab from './Entry_Components/EntriesTab';
 import FriendsTab from './Friend_Components/FriendsTab';
 import SettingsTab from './Settings_Components/SettingsTab';
@@ -151,9 +152,10 @@ export default class Main extends Component {
           this.getEntries();
           navigator.pop();
         })
-          .catch((error) => {
-            console.log("fetch error:", error)
-          });
+
+        .catch((error) => {
+          console.log("fetch error:", error)
+        });
     });
   }
 
@@ -198,6 +200,8 @@ export default class Main extends Component {
     if (this.state.page === "SettingsTab") return <SettingsTab
                                                     navigator={navigator} 
                                                     signOut={ this.props.signOut }/>;
+    if (this.state.page === 'FeedTab') return <FeedTab 
+                                                    navigator={navigator}/>
   }
 
   // This logic applies routing according the title of the current route. It will be activated whenever the 
@@ -225,7 +229,18 @@ export default class Main extends Component {
                 source={require('./images/Home_Active.png')}/>
               <Text
                 style={styles.tabbartext}>
-                Entries</Text>
+                My Entries</Text>
+            </View>
+
+            <View
+              name="FeedTab"
+              style={styles.tabbarView}>
+              <Image
+                style={styles.tabbarimage}
+                source={require('./images/Feed_Icon.png')}/>
+              <Text
+                style={styles.tabbartext}>
+                Feed</Text>
             </View>
 
             <View
@@ -362,9 +377,7 @@ export default class Main extends Component {
                   return (<Text style={ styles.title }>{ `Add a comment` } </Text>);
                 } else if ( this.state.page === 'FriendsTab' ) {
                   return (<Text style={ styles.title }>{ 'Friends' }</Text>);
-                }
-
-                if (route.title === 'PasswordScene') {
+                } else if (route.title === 'PasswordScene') {
                   return (<Text style={ styles.title }>{ 'Password Change' }</Text>);
                 }
 
@@ -373,9 +386,12 @@ export default class Main extends Component {
                   return (<Text style={ styles.title }>{ 'Settings' }</Text>);
                 }
 
-                else {
-                  return (<Text style={ styles.title }>{ 'ERROR: We haven\'t covered this route yet.' }</Text>);
+                // Title views for the feed route.
+                if (this.state.page === 'FeedTab') {
+                  return(<Text style={ styles.title }>{ 'Entry Feed' }</Text>)
                 }
+                
+                return (<Text style={ styles.title }>{ 'ERROR: We haven\'t covered this route yet.' }</Text>);
               }
             }
           }
