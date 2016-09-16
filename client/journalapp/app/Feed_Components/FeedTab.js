@@ -83,7 +83,7 @@ export default class FeedTab extends Component {
       <View style={ styles.container }>
         <EntryList 
             navigator={ this.props.navigator } 
-            updatePostId={ this.props.updatePostId } 
+            updatePostID={ this.props.updatePostID } 
             user={ this.state.user } 
             token={ this.state.token } 
             entries={ this.state.entries } 

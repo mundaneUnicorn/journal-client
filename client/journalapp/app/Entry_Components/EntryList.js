@@ -53,7 +53,8 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
                     token={ token } 
                     votes={ rowData.votes } 
                     text={ rowData.text } 
-                    createdAt={ rowData.createdAt } 
+                    createdAt={ rowData.createdAt }
+                    updatePostID={ updatePostID }
                     friendPost={ false } 
                     location={ rowData.location }/>
             </Swipeout>
