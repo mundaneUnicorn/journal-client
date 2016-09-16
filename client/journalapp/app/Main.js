@@ -23,6 +23,7 @@ import MessageScene from './Entry_Components/MessageScene';
 import SearchFriends from './Friend_Components/SearchFriends';
 import ChangePassword from './Settings_Components/ChangePasswordScene';
 import CommentScene from './Entry_Components/CommentScene';
+import WhiteListScene from './Entry_Components/WhiteListScene.js';
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -46,8 +47,8 @@ export default class Main extends Component {
   }
 
   // This is used inside MessageScene, where the user's input updates the Main component's newEntry state.
-  // The update occurs here, instead of in MessageScene, so that the "Publish" text's onpress method in 
-  // Main can access the new entry and post it to the server. 
+  // The update occurs here, instead of in MessageScene, so that the "Publish" text's onpress method in
+  // Main can access the new entry and post it to the server.
   updateEntry(text){
     this.setState({
       newEntry: text
@@ -79,14 +80,14 @@ export default class Main extends Component {
 
   // All logic here is grabbed from the testGeo.js file; integrates user's location
   // into the app.
-  // NOTE: React Native unfortunately uses navigator as a variable in their geolocation. This does not refer to 
-  // the Navigator component, nor an instance of it. 
+  // NOTE: React Native unfortunately uses navigator as a variable in their geolocation. This does not refer to
+  // the Navigator component, nor an instance of it.
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var latLng = {lat: position.coords.longitude, lng: position.coords.latitude};
         // The GeoCoder needs Xcode configuration to work. For now, use dummy data.
-        // to establish connection with server. 
+        // to establish connection with server.
 
         // GeoCoder.geocodePosition(latLng)
         //   .then( (res) => {
@@ -106,9 +107,9 @@ export default class Main extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
-  // This method is passed down to EntriesTab.js, where it is used to get the list of all entries for 
-  // either the signed in user, when he/she is at his/her profile, or all the entries for a selected friend, 
-  // if the user has navigated over to that friend's profile. Note that it will be called on the entry tab's 
+  // This method is passed down to EntriesTab.js, where it is used to get the list of all entries for
+  // either the signed in user, when he/she is at his/her profile, or all the entries for a selected friend,
+  // if the user has navigated over to that friend's profile. Note that it will be called on the entry tab's
   // mount and also after the user makes a new entry (so it'll autorefresh the entry list).
   getEntries(){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
@@ -134,7 +135,7 @@ export default class Main extends Component {
     });
   }
 
-  // Enter a new entry for the user. This method is here rather than in EntryTab.js so that the user may use the 
+  // Enter a new entry for the user. This method is here rather than in EntryTab.js so that the user may use the
   // publish onPress method.
   postEntry(navigator){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
@@ -161,7 +162,6 @@ export default class Main extends Component {
 
   postComment(navigator) {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      console.log('THE ID OF THE POST: ', this.state.postID);
       var newComment = { 
         id: this.state.postID,
         comment: this.state.comment
@@ -182,8 +182,8 @@ export default class Main extends Component {
     })
   }
 
-  // According to the state's current page, return a certain tab view. Tab views are all stateful, and will 
-  // potentially contain logic to interact with the server, or navigate to scenes using the Navigator. This 
+  // According to the state's current page, return a certain tab view. Tab views are all stateful, and will
+  // potentially contain logic to interact with the server, or navigate to scenes using the Navigator. This
   // is essentially the tab's router.
   renderTab(navigator) {
     if (this.state.page === "EntriesTab") return <EntriesTab
@@ -195,16 +195,16 @@ export default class Main extends Component {
                                                     navigator={navigator}
                                                     updateFriend={ this.updateFriend.bind(this) }/>;
     if (this.state.page === "SettingsTab") return <SettingsTab
-                                                    navigator={navigator} 
+                                                    navigator={navigator}
                                                     signOut={ this.props.signOut }/>;
-    if (this.state.page === 'FeedTab') return <FeedTab 
+    if (this.state.page === 'FeedTab') return <FeedTab
                                                     navigator={navigator}/>
   }
 
-  // This logic applies routing according the title of the current route. It will be activated whenever the 
-  // Navigator is altered (via push, pop, etc), will check to see the title of the current route (note that 
-  // a Navigator is a stack of scenes, so the current route will be the last route in the stack), and will then 
-  // return the appropriate Component(s). 
+  // This logic applies routing according the title of the current route. It will be activated whenever the
+  // Navigator is altered (via push, pop, etc), will check to see the title of the current route (note that
+  // a Navigator is a stack of scenes, so the current route will be the last route in the stack), and will then
+  // return the appropriate Component(s).
   navigatorRenderScene(route, navigator) {
     const { page } = this.state;
     if (route.title === 'Main') {
@@ -287,12 +287,17 @@ export default class Main extends Component {
           navigator={ navigator }
           updateComment={ this.updateComment.bind(this) } />
       )
+    } else if (route.title === 'WhiteListScene') {
+      return (
+        <WhiteListScene
+          navigator={ navigator } />
+      )
     }
   }
 
-  // Note that all the Components are enclosed in the navigator. It sets the initial route to Main, 
+  // Note that all the Components are enclosed in the navigator. It sets the initial route to Main,
   // which is then picked up in the navigatorRenderScene routing above, which then renders the view
-  // of the main page (including the appropriate tab view, according to the renderTab rendering of 
+  // of the main page (including the appropriate tab view, according to the renderTab rendering of
   // the current tab view);
   render() {
     return (
@@ -302,7 +307,7 @@ export default class Main extends Component {
 
         // The navigation bar is the final source of view routing. It only controls the view in the upper
         // nav bar, though note that onPress methods here may interact with the Main state, leading to navigation
-        // or server interactions. 
+        // or server interactions.
         navigationBar = {
           <Navigator.NavigationBar
             routeMapper={{
@@ -387,7 +392,7 @@ export default class Main extends Component {
                 if (this.state.page === 'FeedTab') {
                   return(<Text style={ styles.title }>{ 'Entry Feed' }</Text>)
                 }
-                
+
                 return (<Text style={ styles.title }>{ 'ERROR: We haven\'t covered this route yet.' }</Text>);
               }
             }
@@ -397,6 +402,3 @@ export default class Main extends Component {
     )
   }
 }
-
-
-

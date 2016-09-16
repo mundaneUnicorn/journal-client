@@ -52,9 +52,9 @@ export default class Entry extends Component {
         'content-type': 'application/json',
         'x-access-token': entryContext.props.token,
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         user: entryContext.props.user,
-        entryId: entryContext.props.id, 
+        entryId: entryContext.props.id,
       }),
     }).then(function (response) {
       var votesArray = entryContext.props.votes;
@@ -62,13 +62,13 @@ export default class Entry extends Component {
 
       if (userIndex === -1) {
         votesArray.push(entryContext.props.user);
-        entryContext.setState({ 
+        entryContext.setState({
           full: styles.showImage,
           empty: styles.hideImage,
         });
       } else {
         votesArray.splice(userIndex, 1);
-        entryContext.setState({ 
+        entryContext.setState({
           full: styles.hideImage,
           empty: styles.showImage,
         });
@@ -114,38 +114,40 @@ export default class Entry extends Component {
 
   render() {
     return (
-      <View style={ this.state.entryStyle }>
-        <View style={ styles.row }>
-          <View style={ styles.rowHeader }>
-            <Text style={ styles.date }>
-              { parseDate(this.props.createdAt) }
-            </Text>
-            <Text style={ styles.location }>
-              { this.props.location }
-            </Text>
-          </View>
-          <View style={ styles.rowBody }>
-            <Text style={ styles.entryText }>
-              { this.props.text }     
-            </Text>
+      <TouchableHighlight onPress={ () => this.props.navigator.push({title: 'WhiteListScene'}) }>
+        <View style={ this.state.entryStyle }>
+          <View style={ styles.row }>
+            <View style={ styles.rowHeader }>
+              <Text style={ styles.date }>
+                { parseDate(this.props.createdAt) }
+              </Text>
+              <Text style={ styles.location }>
+                { this.props.location }
+              </Text>
+            </View>
+            <View style={ styles.rowBody }>
+              <Text style={ styles.entryText }>
+                { this.props.text }
+              </Text>
 
-            <View style={ styles.commentratingContainer }>
+              <View style={ styles.commentratingContainer }>
 
-              { this.allowComments() }
+                { this.allowComments() }
 
-              <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost.bind(this) }>
-                <View style={ styles.ratingContainer }>
-                  <Text style={ styles.rating }>
-                    { this.props.votes.length }
-                  </Text>
-                  <Image style={ this.checkLikesForEmptyHeart() } source={require('../images/empty_heart.png')}></Image>
-                  <Image style={ this.checkLikesForFullHeart() } source={require('../images/full_heart.png')}></Image>
-                </View>
-              </TouchableHighlight>
+                <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost.bind(this) }>
+                  <View style={ styles.ratingContainer }>
+                    <Text style={ styles.rating }>
+                      { this.props.votes.length }
+                    </Text>
+                    <Image style={ this.checkLikesForEmptyHeart() } source={require('../images/empty_heart.png')}></Image>
+                    <Image style={ this.checkLikesForFullHeart() } source={require('../images/full_heart.png')}></Image>
+                  </View>
+                </TouchableHighlight>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </TouchableHighlight>
     );
   }
 }
