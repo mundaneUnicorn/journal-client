@@ -12,6 +12,7 @@ export default class WhiteListScene extends Component {
     this.state = {
       all: true,
       none: false,
+      // Specific will be for the friends who have been clicked
       specific: ['Jim', 'Dwight']
     }
   }
@@ -23,13 +24,9 @@ export default class WhiteListScene extends Component {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
+        paddingTop: 80
       }}>
-        <Text>
-          {'\n'}
-          {'\n'}
-          {'\n'}
-        </Text>
-        <View style={{ paddingLeft: 6, paddingTop: 10 }}>
+        <View style={{ paddingLeft: 6 }}>
           <CheckBox
             checkboxStyle={{width: 18, height: 18}}
             label='All'
