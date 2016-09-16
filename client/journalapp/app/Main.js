@@ -152,6 +152,22 @@ export default class Main extends Component {
 
   postComment(navigator) {
     console.log('AWWW YEAH POSTING A COMMENT NOW: ', this.state.comment);
+    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      var newComment = { text: this.state.comment };
+
+      fetch('http://localhost:3000/api/comment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify(newComment)
+      }).then(response => {
+        navigator.pop();
+      }).catch(err => {
+        console.log('comment saving error: ', err);
+      })
+    })
   }
 
   // According to the state's current page, return a certain tab view. Tab views are all stateful, and will 
