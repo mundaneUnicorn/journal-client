@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
    fontSize:10,
    fontWeight:'700',
    marginBottom:12,
-   color:"#333333"
+   color:"#333333",
+   alignSelf: 'center',
   },
   arrow: {
     alignSelf:'flex-end',

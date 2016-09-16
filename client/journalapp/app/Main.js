@@ -184,7 +184,18 @@ export default class Main extends Component {
                 source={require('./images/Home_Active.png')}/>
               <Text
                 style={styles.tabbartext}>
-                Entries</Text>
+                Feed</Text>
+            </View>
+
+            <View
+              name="EntriesTab"
+              style={styles.tabbarView}>
+              <Image
+                style={styles.tabbarimage}
+                source={require('./images/Home_Active.png')}/>
+              <Text
+                style={styles.tabbartext}>
+                My Entries</Text>
             </View>
 
             <View
@@ -303,9 +314,7 @@ export default class Main extends Component {
                   return (<Text style={ styles.title }>{ this.state.friendName } </Text>);
                 } else if ( this.state.page === 'FriendsTab' ) {
                   return (<Text style={ styles.title }>{ 'Friends' }</Text>);
-                }
-
-                if (route.title === 'PasswordScene') {
+                } else if (route.title === 'PasswordScene') {
                   return (<Text style={ styles.title }>{ 'Password Change' }</Text>);
                 }
 
@@ -314,9 +323,12 @@ export default class Main extends Component {
                   return (<Text style={ styles.title }>{ 'Settings' }</Text>);
                 }
 
-                else {
-                  return (<Text style={ styles.title }>{ 'ERROR: We haven\'t covered this route yet.' }</Text>);
+                // Title views for the feed route.
+                if (this.state.page === 'Feed Tab') {
+                  return(<Text style={ styles.title }>{ 'Settings' }</Text>)
                 }
+                
+                return (<Text style={ styles.title }>{ 'ERROR: We haven\'t covered this route yet.' }</Text>);
               }
             }
           }
