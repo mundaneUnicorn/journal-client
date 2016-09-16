@@ -19,6 +19,10 @@ export default class CommentScene extends Component {
     };
   }
 
+  componentDidMount(){
+    this.props.updateComment('');
+  }
+
   moveUpForKeyboardShow(){
     setTimeout( ()=> {
       this.setState(
@@ -43,6 +47,7 @@ export default class CommentScene extends Component {
           maxLength={ 600 }
           placeholder='Write a comment right over here dude...'
           style={ [this.state.dynamicHeight(), styles.bodyWidth, styles.fadedText] }
+          onChangeText={ (text) => this.props.updateComment(text) }
           onFocus= { this.moveUpForKeyboardShow.bind(this) }
           onBlur= { this.moveDownForKeyboardHide.bind(this) }/>
       </View>

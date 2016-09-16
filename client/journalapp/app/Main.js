@@ -38,7 +38,8 @@ export default class Main extends Component {
       entries: ds.cloneWithRows([]),
       newEntry: '',
       friendName: '',
-      location: ''
+      location: '',
+      comment: ''
     };
   }
 
@@ -56,6 +57,12 @@ export default class Main extends Component {
   updateFriend(name){
     this.setState({
       friendName: name
+    })
+  }
+
+  updateComment(text) {
+    this.setState({
+      comment: text
     })
   }
 
@@ -144,7 +151,7 @@ export default class Main extends Component {
   }
 
   postComment(navigator) {
-    console.log('AWWW YEAH POSTING A COMMENT NOW');
+    console.log('AWWW YEAH POSTING A COMMENT NOW: ', this.state.comment);
   }
 
   // According to the state's current page, return a certain tab view. Tab views are all stateful, and will 
@@ -235,7 +242,8 @@ export default class Main extends Component {
     } else if (route.title === 'CommentScene') {
       return (
         <CommentScene
-          navigator={ navigator } />
+          navigator={ navigator }
+          updateComment={ this.updateComment.bind(this) } />
       )
     }
   }
