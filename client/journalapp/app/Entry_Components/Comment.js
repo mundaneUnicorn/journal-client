@@ -7,6 +7,8 @@ import {
   AsyncStorage
 } from 'react-native';
 
+import styles from '../styles/CommentStyles';
+
 export default class Comment extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +24,10 @@ export default class Comment extends Component {
     this.getComments();
   }
 
+  componentDidMount() {
+    this.render();
+  }
+
   getComments() {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       fetch('http://localhost:3000/api/comment', {
@@ -35,7 +41,7 @@ export default class Comment extends Component {
           console.log('returned json: ', json);
           const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
           this.setState({
-            entries: ds.cloneWithRows(json)
+            comments: ds.cloneWithRows(json)
           })
         }).catch(err => {
           console.log('fetching comments error: ', err);
@@ -45,14 +51,15 @@ export default class Comment extends Component {
   }
 
   renderRow(rowData) {
-    
+
   }
 
   render() {
     return (
-      <View>
-        <Text>Hello</Text>
+      <View style={ styles.container }>
+        <Text style={ styles.header }>Comments</Text>
         <ListView
+          style={ styles.listView }
           dataSource={ this.state.comments }
           renderRow={ (rowData) => (<Text>{rowData}</Text>) } />
       </View>

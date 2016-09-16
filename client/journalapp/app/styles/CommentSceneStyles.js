@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   bodyWidth: {
     marginLeft: Dimensions.get('window').width * .05,
-    marginRight: Dimensions.get('window').width * .05,
+    marginRight: Dimensions.get('window').width * .05
   },
   fadedText: {
     fontSize: 16,
@@ -29,7 +29,9 @@ const styles = StyleSheet.create({
     paddingBottom: 5
   },
   comments: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginLeft: Dimensions.get('window').width * .05,
+    marginRight: Dimensions.get('window').width * .05
   }
 })
 
