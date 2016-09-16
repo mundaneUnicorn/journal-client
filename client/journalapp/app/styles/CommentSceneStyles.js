@@ -5,15 +5,21 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f0f8ff',
-    color: 'black',
-    marginTop: 40,
-    borderWidth: 1,
+    borderColor: 'gray',
+    width: Dimensions.get('window').width * 1,
+    paddingTop: 70, 
+    marginLeft: 0,
+    backgroundColor: '#f5f6f6', 
   },
-  text: {
-    color: 'black',
-    height: 40
-  }
+  bodyWidth: {
+    marginLeft: Dimensions.get('window').width * .05,
+    marginRight: Dimensions.get('window').width * .05,
+  },
+  fadedText: {
+    fontSize: 16,
+    color: 'gray',
+    fontWeight: 'bold',
+  }, 
 })
 
 module.exports = styles;

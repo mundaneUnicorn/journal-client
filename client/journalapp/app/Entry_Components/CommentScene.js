@@ -15,7 +15,7 @@ export default class CommentScene extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dynamicHeight: () => { return {height: Dimensions.get('window').height - 49 - 70}}
+      dynamicHeight: () => { return {height: Dimensions.get('window').height - 70}}
     };
   }
 
@@ -41,7 +41,7 @@ export default class CommentScene extends Component {
           keyboardAppearance='light' 
           multiline={ true }
           maxLength={ 600 }
-          placeholder='Begin a comment right over here dude...'
+          placeholder='Write a comment right over here dude...'
           style={ [this.state.dynamicHeight(), styles.bodyWidth, styles.fadedText] }
           onFocus= { this.moveUpForKeyboardShow.bind(this) }
           onBlur= { this.moveDownForKeyboardHide.bind(this) }/>
