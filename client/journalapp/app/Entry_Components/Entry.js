@@ -52,9 +52,9 @@ export default class Entry extends Component {
         'content-type': 'application/json',
         'x-access-token': entryContext.props.token,
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         user: entryContext.props.user,
-        entryId: entryContext.props.id, 
+        entryId: entryContext.props.id,
       }),
     }).then(function (response) {
       var votesArray = entryContext.props.votes;
@@ -62,13 +62,13 @@ export default class Entry extends Component {
 
       if (userIndex === -1) {
         votesArray.push(entryContext.props.user);
-        entryContext.setState({ 
+        entryContext.setState({
           full: styles.showImage,
           empty: styles.hideImage,
         });
       } else {
         votesArray.splice(userIndex, 1);
-        entryContext.setState({ 
+        entryContext.setState({
           full: styles.hideImage,
           empty: styles.showImage,
         });
@@ -126,7 +126,7 @@ export default class Entry extends Component {
           </View>
           <View style={ styles.rowBody }>
             <Text style={ styles.entryText }>
-              { this.props.text }     
+              { this.props.text }
             </Text>
 
             <View style={ styles.commentratingContainer }>
