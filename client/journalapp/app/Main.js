@@ -292,6 +292,7 @@ export default class Main extends Component {
         <WhiteListScene
           navigator={ navigator } />
       )
+    }
   }
 
   // Note that all the Components are enclosed in the navigator. It sets the initial route to Main,
