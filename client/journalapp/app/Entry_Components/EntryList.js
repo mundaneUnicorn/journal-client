@@ -11,7 +11,6 @@ import {
 // VB: Refactored require to use import, for consistency
 import Swipeout from 'react-native-swipeout';
 import Entry from './Entry';
-import Comment from './Comment';
 import styles from '../styles/EntryListStyles';
 
 var EntryList = ({user, token, entries, rerender, userEntries, navigator, updatePostID}) => (
