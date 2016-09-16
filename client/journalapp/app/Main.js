@@ -153,7 +153,10 @@ export default class Main extends Component {
   postComment(navigator) {
     console.log('AWWW YEAH POSTING A COMMENT NOW: ', this.state.comment);
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      var newComment = { text: this.state.comment };
+      var newComment = { 
+        text: this.state.comment,
+        friendName: this.state.friendName
+      };
 
       fetch('http://localhost:3000/api/comment', {
         method: 'POST',
@@ -163,6 +166,8 @@ export default class Main extends Component {
         },
         body: JSON.stringify(newComment)
       }).then(response => {
+        console.log('YHEYHEYHEYEHYEHYEEH: ', response.json().then(res => console.log(res)));
+        console.log('THE NAME OF THE FRIEND: ', this.state.friendName);
         navigator.pop();
       }).catch(err => {
         console.log('comment saving error: ', err);
