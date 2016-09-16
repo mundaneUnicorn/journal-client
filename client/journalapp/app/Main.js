@@ -161,7 +161,6 @@ export default class Main extends Component {
 
   postComment(navigator) {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      console.log('THE ID OF THE POST: ', this.state.postID);
       var newComment = { 
         id: this.state.postID,
         comment: this.state.comment
