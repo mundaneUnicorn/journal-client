@@ -41,7 +41,7 @@ export default class Entry extends Component {
   }
 
   updateCurrentEntry() {
-    this.props.updateText(this.props.text);
+    this.props.updatePostID(this.props.id);
   }
 
   likePost() {
