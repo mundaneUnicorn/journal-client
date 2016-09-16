@@ -70,7 +70,7 @@ export default class FriendScene extends Component {
   render() {
     return (
       <View style = { styles.container }>
-        <EntryList user={ this.state.user } token={ this.state.token } navigator={ this.props.navigator } entries={ this.state.entries }/>
+        <EntryList user={ this.state.user } token={ this.state.token } navigator={ this.props.navigator } entries={ this.state.entries } updateText={ this.props.updateText }/>
       </View>
     )
   }

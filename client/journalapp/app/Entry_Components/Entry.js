@@ -40,6 +40,10 @@ export default class Entry extends Component {
     }
   }
 
+  updateCurrentEntry() {
+    this.props.updateText(this.props.text);
+  }
+
   likePost() {
     var entryContext = this;
     fetch('http://localhost:3000/api/likes', {
@@ -104,6 +108,7 @@ export default class Entry extends Component {
   }
 
   addComment() {
+    this.updateCurrentEntry();
     this.props.navigator.push({ title: 'CommentScene' })
   }
 

@@ -39,7 +39,8 @@ export default class Main extends Component {
       newEntry: '',
       friendName: '',
       location: '',
-      comment: ''
+      comment: '',
+      text: ''
     };
   }
 
@@ -63,6 +64,12 @@ export default class Main extends Component {
   updateComment(text) {
     this.setState({
       comment: text
+    })
+  }
+
+  updateText(text) {
+    this.setState({
+      text: text
     })
   }
 
@@ -152,10 +159,11 @@ export default class Main extends Component {
 
   postComment(navigator) {
     console.log('AWWW YEAH POSTING A COMMENT NOW: ', this.state.comment);
+    console.log('THIS IS THE TEXT THE FRIEND MADE: ', this.state.text);
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       var newComment = { 
-        text: this.state.comment,
-        friendName: this.state.friendName
+        text: this.state.text,
+        comment: this.state.comment
       };
 
       fetch('http://localhost:3000/api/comment', {
@@ -167,7 +175,7 @@ export default class Main extends Component {
         body: JSON.stringify(newComment)
       }).then(response => {
         console.log('YHEYHEYHEYEHYEHYEEH: ', response.json().then(res => console.log(res)));
-        console.log('THE NAME OF THE FRIEND: ', this.state.friendName);
+        // console.log('THE TEXT OF THE FRIEND: ', this.state.text);
         navigator.pop();
       }).catch(err => {
         console.log('comment saving error: ', err);
@@ -240,6 +248,7 @@ export default class Main extends Component {
         <FriendScene
           friendId={ route.friendId }
           navigator={navigator}
+          updateText={ this.updateText.bind(this) }
           rerender={ () => this.getEntries() } />
       )
     } else if (route.title === 'MessageScene') {
