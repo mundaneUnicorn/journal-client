@@ -46,6 +46,8 @@ export default class Comment extends Component {
         }).catch(err => {
           console.log('fetching comments error: ', err);
         })
+      }).catch(err => {
+        console.log('fetching comments error: ', err);
       })
     })
   }
@@ -53,7 +55,7 @@ export default class Comment extends Component {
   renderRow(rowData) {
     console.log('row data: ', rowData);
     return (
-      <Text>{rowData}</Text>
+      <Text>{rowData.message}</Text>
     )
   }
 
