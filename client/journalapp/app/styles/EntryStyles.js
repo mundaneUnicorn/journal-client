@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   date: {
     justifyContent: 'flex-start',
-    fontSize: 11,
+    fontSize: 12,
     color: '#999999',
     fontWeight: '500'
   },
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color:"#424242",
     paddingRight: 30,
+    paddingBottom: 5,
   },
   commentratingContainer: {
     alignSelf: 'flex-end',
@@ -82,6 +83,13 @@ const styles = StyleSheet.create({
   },
   commentContainer: {
     marginRight: 10
+  },
+  authorName: {
+    justifyContent: 'flex-start',
+    fontSize: 14,
+    fontWeight: '500',
+    color:"#424242",
+    paddingRight: 0,
   }
 });
 
