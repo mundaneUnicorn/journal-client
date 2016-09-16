@@ -11,9 +11,10 @@ import {
 // VB: Refactored require to use import, for consistency
 import Swipeout from 'react-native-swipeout';
 import Entry from './Entry';
+import Comment from './Comment';
 import styles from '../styles/EntryListStyles';
 
-var EntryList = ({user, token, entries, rerender, userEntries, navigator, updateText}) => (
+var EntryList = ({user, token, entries, rerender, userEntries, navigator, updatePostID}) => (
     <ListView 
       dataSource={entries} 
       style={styles.container} 
@@ -42,9 +43,11 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
           }
         }]
         return userEntries ? (
-          <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
-            <Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
-          </Swipeout>
+          <View>
+            <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
+              <Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
+            </Swipeout>
+          </View>
         ) : (<Entry
                  id={ rowData.id }
                  user={ user } 
@@ -54,7 +57,7 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
                  createdAt={ rowData.createdAt } 
                  friendPost={ true } 
                  location={ rowData.location } 
-                 updateText={ updateText } 
+                 updatePostID={ updatePostID } 
                  navigator={ navigator }/>)
       }}/>
 )
