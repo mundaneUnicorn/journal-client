@@ -103,7 +103,7 @@ export default class Entry extends Component {
         <TouchableHighlight style={ styles.commentContainer } underlayColor='#dcdcdc' onPress={ this.addComment.bind(this) }>
           <Text style={ styles.rating } style={{color: 'blue'}}>Comment</Text>
         </TouchableHighlight>
-      )
+      );
     }
   }
 
