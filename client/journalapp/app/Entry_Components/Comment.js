@@ -51,7 +51,10 @@ export default class Comment extends Component {
   }
 
   renderRow(rowData) {
-
+    console.log('row data: ', rowData);
+    return (
+      <Text>{rowData}</Text>
+    )
   }
 
   render() {
@@ -61,7 +64,7 @@ export default class Comment extends Component {
         <ListView
           style={ styles.listView }
           dataSource={ this.state.comments }
-          renderRow={ (rowData) => (<Text>{rowData}</Text>) } />
+          renderRow={ this.renderRow.bind(this) } />
       </View>
     )
   }
