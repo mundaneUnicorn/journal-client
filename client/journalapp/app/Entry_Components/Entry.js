@@ -24,15 +24,28 @@ var parseDate = (date) => {
   }
 };
 
+var moddedStyle = {
+  borderBottomWidth: 0.5,
+  borderColor: '#cccccc',
+  paddingTop: 40,
+  paddingBottom:12
+}
+
 export default class Entry extends Component {
   constructor(props) {
     super(props);
     this.props = props;
+    this.state = {
+      entryStyle: props.friendPost ? moddedStyle : styles.container
+    }
+  }
+
+  updateCurrentEntry() {
+    this.props.updateText(this.props.text);
   }
 
   likePost() {
     var entryContext = this;
-    console.log(this.props);
     fetch('http://localhost:3000/api/likes', {
       method: 'POST',
       headers: {
@@ -84,9 +97,24 @@ export default class Entry extends Component {
     }
   }
 
+  allowComments() {
+    if (this.props.friendPost) {
+      return (
+        <TouchableHighlight style={ styles.commentContainer } underlayColor='#dcdcdc' onPress={ this.addComment.bind(this) }>
+          <Text style={ styles.rating } style={{color: 'blue'}}>Comment</Text>
+        </TouchableHighlight>
+      )
+    }
+  }
+
+  addComment() {
+    this.updateCurrentEntry();
+    this.props.navigator.push({ title: 'CommentScene' })
+  }
+
   render() {
     return (
-      <View style={ styles.container }>
+      <View style={ this.state.entryStyle }>
         <View style={ styles.row }>
           <View style={ styles.rowHeader }>
             <Text style={ styles.date }>
@@ -100,15 +128,21 @@ export default class Entry extends Component {
             <Text style={ styles.entryText }>
               { this.props.text }     
             </Text>
-            <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost.bind(this) }>
-              <View style={ styles.ratingContainer }>
-                <Text style={ styles.rating }>
-                  { this.props.votes.length }
-                </Text> 
-                <Image style={ this.checkLikesForEmptyHeart() } source={require('../images/empty_heart.png')}></Image>
-                <Image style={ this.checkLikesForFullHeart() } source={require('../images/full_heart.png')}></Image>
-              </View>
-            </TouchableHighlight>
+
+            <View style={ styles.commentratingContainer }>
+
+              { this.allowComments() }
+
+              <TouchableHighlight style={ styles.ratingContainer } onPress={ this.likePost.bind(this) }>
+                <View style={ styles.ratingContainer }>
+                  <Text style={ styles.rating }>
+                    { this.props.votes.length }
+                  </Text>
+                  <Image style={ this.checkLikesForEmptyHeart() } source={require('../images/empty_heart.png')}></Image>
+                  <Image style={ this.checkLikesForFullHeart() } source={require('../images/full_heart.png')}></Image>
+                </View>
+              </TouchableHighlight>
+            </View>
           </View>
         </View>
       </View>

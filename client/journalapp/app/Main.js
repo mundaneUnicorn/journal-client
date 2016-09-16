@@ -21,6 +21,7 @@ import FriendScene from './Friend_Components/FriendScene';
 import MessageScene from './Entry_Components/MessageScene';
 import SearchFriends from './Friend_Components/SearchFriends';
 import ChangePassword from './Settings_Components/ChangePasswordScene';
+import CommentScene from './Entry_Components/CommentScene';
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -37,7 +38,9 @@ export default class Main extends Component {
       entries: ds.cloneWithRows([]),
       newEntry: '',
       friendName: '',
-      location: ''
+      location: '',
+      comment: '',
+      text: ''
     };
   }
 
@@ -55,6 +58,18 @@ export default class Main extends Component {
   updateFriend(name){
     this.setState({
       friendName: name
+    })
+  }
+
+  updateComment(text) {
+    this.setState({
+      comment: text
+    })
+  }
+
+  updateText(text) {
+    this.setState({
+      text: text
     })
   }
 
@@ -142,6 +157,32 @@ export default class Main extends Component {
     });
   }
 
+  postComment(navigator) {
+    console.log('AWWW YEAH POSTING A COMMENT NOW: ', this.state.comment);
+    console.log('THIS IS THE TEXT THE FRIEND MADE: ', this.state.text);
+    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      var newComment = { 
+        text: this.state.text,
+        comment: this.state.comment
+      };
+
+      fetch('http://localhost:3000/api/comment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify(newComment)
+      }).then(response => {
+        console.log('YHEYHEYHEYEHYEHYEEH: ', response.json().then(res => console.log(res)));
+        // console.log('THE TEXT OF THE FRIEND: ', this.state.text);
+        navigator.pop();
+      }).catch(err => {
+        console.log('comment saving error: ', err);
+      })
+    })
+  }
+
   // According to the state's current page, return a certain tab view. Tab views are all stateful, and will 
   // potentially contain logic to interact with the server, or navigate to scenes using the Navigator. This 
   // is essentially the tab's router.
@@ -207,6 +248,7 @@ export default class Main extends Component {
         <FriendScene
           friendId={ route.friendId }
           navigator={navigator}
+          updateText={ this.updateText.bind(this) }
           rerender={ () => this.getEntries() } />
       )
     } else if (route.title === 'MessageScene') {
@@ -226,6 +268,12 @@ export default class Main extends Component {
       return (
         <ChangePassword
           navigator={ navigator } />
+      )
+    } else if (route.title === 'CommentScene') {
+      return (
+        <CommentScene
+          navigator={ navigator }
+          updateComment={ this.updateComment.bind(this) } />
       )
     }
   }
@@ -248,7 +296,7 @@ export default class Main extends Component {
             routeMapper={{
 
               LeftButton(route, navigator, index, navState) {
-                if ( route.title === 'FriendPage' || route.title === 'SearchFriends' || route.title === 'PasswordScene'){
+                if ( route.title === 'FriendPage' || route.title === 'SearchFriends' || route.title === 'PasswordScene' || route.title === 'CommentScene'){
                   return (
                     <View style={ styles.topBarView }>
                       <Text onPress={ ()=>{ navigator.pop() }} >
@@ -268,7 +316,7 @@ export default class Main extends Component {
               },
 
               RightButton: (route, navigator, index, navState) => {
-                if ( this.state.page === 'FriendsTab' && route.title !== 'SearchFriends' && route.title !== 'FriendPage'){
+                if ( this.state.page === 'FriendsTab' && route.title !== 'SearchFriends' && route.title !== 'FriendPage' && route.title !== 'CommentScene'){
                   return (
                     <View style={ [styles.topBarView, styles.rightArrow] }>
                       <Text onPress={()=>{ navigator.push({title: 'SearchFriends'}) }} >
@@ -282,6 +330,15 @@ export default class Main extends Component {
                     <View style={ [styles.topBarView, styles.rightArrow] }>
                       <Text style={ [styles.faintText, styles.largerText] } onPress={(() => { this.postEntry(navigator); }).bind(this) } >
                         Publish
+                      </Text>
+                    </View>
+                  );
+                }
+                if ( route.title === 'CommentScene' ) {
+                  return (
+                    <View style={ [styles.topBarView, styles.rightArrow] }>
+                      <Text style={ [styles.faintText, styles.largerText] } onPress={(() => { this.postComment(navigator); }).bind(this) } >
+                        Save
                       </Text>
                     </View>
                   );
@@ -301,6 +358,8 @@ export default class Main extends Component {
                   return (<Text style={ styles.title }>{ 'Add Friends' }</Text>);
                 } else if ( route.title === 'FriendPage' ) {
                   return (<Text style={ styles.title }>{ this.state.friendName } </Text>);
+                } else if ( route.title === 'CommentScene' ) {
+                  return (<Text style={ styles.title }>{ `Add a comment` } </Text>);
                 } else if ( this.state.page === 'FriendsTab' ) {
                   return (<Text style={ styles.title }>{ 'Friends' }</Text>);
                 }

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderColor: '#cccccc',
     paddingTop: 12,
-    paddingBottom:12
+    paddingBottom:28
   },
   row: {
     flex: 1,
@@ -45,6 +45,12 @@ const styles = StyleSheet.create({
     color:"#424242",
     paddingRight: 30,
   },
+  commentratingContainer: {
+    alignSelf: 'flex-end',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
   ratingContainer: {
     backgroundColor: '#fafafa',
     flexDirection: 'row',
@@ -74,6 +80,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginLeft: 2,
   },
+  commentContainer: {
+    marginRight: 10
+  }
 });
 
 module.exports = styles;

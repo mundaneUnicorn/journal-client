@@ -13,7 +13,7 @@ import Swipeout from 'react-native-swipeout';
 import Entry from './Entry';
 import styles from '../styles/EntryListStyles';
 
-var EntryList = ({user, token, entries, rerender, userEntries}) => (
+var EntryList = ({user, token, entries, rerender, userEntries, navigator, updateText}) => (
     <ListView 
       dataSource={entries} 
       style={styles.container} 
@@ -43,9 +43,19 @@ var EntryList = ({user, token, entries, rerender, userEntries}) => (
         }]
         return userEntries ? (
           <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
-            <Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } location={ rowData.location }/>
+            <Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
           </Swipeout>
-        ) : (<Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } location={ rowData.location }/>)
+        ) : (<Entry
+                 id={ rowData.id }
+                 user={ user } 
+                 token={ token } 
+                 votes={ rowData.votes } 
+                 text={ rowData.text } 
+                 createdAt={ rowData.createdAt } 
+                 friendPost={ true } 
+                 location={ rowData.location } 
+                 updateText={ updateText } 
+                 navigator={ navigator }/>)
       }}/>
 )
 
