@@ -15,9 +15,9 @@ import Comment from './Comment';
 import styles from '../styles/EntryListStyles';
 
 var EntryList = ({user, token, entries, rerender, userEntries, navigator, updatePostID}) => (
-    <ListView 
-      dataSource={entries} 
-      style={styles.container} 
+    <ListView
+      dataSource={entries}
+      style={styles.container}
       renderRow={ (rowData) => {
         let swipeBtn = [{
           text: 'Delete',
@@ -45,22 +45,21 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
         return userEntries ? (
           <View>
             <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
-              <Entry id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
+              <Entry navigator={ navigator } id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
             </Swipeout>
           </View>
         ) : (<Entry
                  id={ rowData.id }
-                 user={ user } 
-                 token={ token } 
-                 votes={ rowData.votes } 
-                 text={ rowData.text } 
-                 createdAt={ rowData.createdAt } 
-                 friendPost={ true } 
-                 location={ rowData.location } 
-                 updatePostID={ updatePostID } 
+                 user={ user }
+                 token={ token }
+                 votes={ rowData.votes }
+                 text={ rowData.text }
+                 createdAt={ rowData.createdAt }
+                 friendPost={ true }
+                 location={ rowData.location }
+                 updatePostID={ updatePostID }
                  navigator={ navigator }/>)
       }}/>
 )
 
 module.exports = EntryList;
-
