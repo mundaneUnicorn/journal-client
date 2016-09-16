@@ -109,7 +109,7 @@ export default class Entry extends Component {
 
   addComment() {
     this.updateCurrentEntry();
-    this.props.navigator.push({ title: 'CommentScene' })
+    this.props.navigator.push({ title: 'CommentScene' });
   }
 
   render() {

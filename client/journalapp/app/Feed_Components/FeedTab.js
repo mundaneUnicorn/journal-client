@@ -50,8 +50,6 @@ export default class FeedTab extends Component {
         .then( json => {
           console.log('Fetched friends posts', json);
           const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-          console.log('jkl;', ds.cloneWithRows(json));
-          console.log('asdf', mainContext.state.entries);
           mainContext.setState({
             entries: ds.cloneWithRows(json)
           })
