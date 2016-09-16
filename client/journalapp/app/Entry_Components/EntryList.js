@@ -48,7 +48,6 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
               <Entry 
                     id={ rowData.id } 
                     author={ rowData.user } 
-                    entryFeed={ this.props.entryFeed } 
                     user={ user } 
                     token={ token } 
                     votes={ rowData.votes } 
@@ -60,8 +59,7 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
           </View>
         ) : (<Entry
                  id={ rowData.id }
-                 author={ rowData.user } 
-                 entryFeed={ this.props.entryFeed } 
+                 author={ rowData.user }
                  user={ user } 
                  token={ token } 
                  votes={ rowData.votes } 

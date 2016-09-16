@@ -117,8 +117,11 @@ export default class Entry extends Component {
       <View style={ this.state.entryStyle }>
         <View style={ styles.row }>
           <View style={ styles.rowHeader }>
+            <Text style={ styles.entryText }>
+              { this.props.author ? this.props.author.fullname + ': ' : '' }
+            </Text>
             <Text style={ styles.date }>
-              { this.props.author.fullname || '' }: { parseDate(this.props.createdAt) }
+              { parseDate(this.props.createdAt) }
             </Text>
             <Text style={ styles.location }>
               { this.props.location }
