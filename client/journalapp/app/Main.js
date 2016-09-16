@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import Tabs from 'react-native-tabs';
+import FeedTab from './Feed_Components/FeedTab'
 import EntriesTab from './Entry_Components/EntriesTab';
 import FriendsTab from './Friend_Components/FriendsTab';
 import SettingsTab from './Settings_Components/SettingsTab';
@@ -136,9 +137,10 @@ export default class Main extends Component {
           this.getEntries();
           navigator.pop();
         })
-          .catch((error) => {
-            console.log("fetch error:", error)
-          });
+
+        .catch((error) => {
+          console.log("fetch error:", error)
+        });
     });
   }
 
@@ -157,7 +159,8 @@ export default class Main extends Component {
     if (this.state.page === "SettingsTab") return <SettingsTab
                                                     navigator={navigator} 
                                                     signOut={ this.props.signOut }/>;
-    if (this.state.page === 'FeedTab') return <Text>Under Construction!</Text>
+    if (this.state.page === 'FeedTab') return <FeedTab 
+                                                    navigator={navigator}/>
   }
 
   // This logic applies routing according the title of the current route. It will be activated whenever the 
