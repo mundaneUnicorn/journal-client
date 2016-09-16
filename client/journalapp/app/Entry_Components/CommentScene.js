@@ -9,6 +9,7 @@ import {
   Stylesheet
 } from 'react-native';
 
+import Comment from './Comment';
 import styles from '../styles/CommentSceneStyles';
 
 export default class CommentScene extends Component {
