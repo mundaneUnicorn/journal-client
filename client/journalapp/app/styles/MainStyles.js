@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
     height: 30,
     width:37.5,
     marginTop:6.5,
-    alignSelf:'center'
+    alignSelf:'center',
+    resizeMode: 'contain',
   },
   tabbartext: {
    fontSize:10,

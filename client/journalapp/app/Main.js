@@ -184,18 +184,18 @@ export default class Main extends Component {
                 source={require('./images/Home_Active.png')}/>
               <Text
                 style={styles.tabbartext}>
-                Feed</Text>
+                My Entries</Text>
             </View>
 
             <View
-              name="EntriesTab"
+              name="FeedTab"
               style={styles.tabbarView}>
               <Image
                 style={styles.tabbarimage}
-                source={require('./images/Home_Active.png')}/>
+                source={require('./images/Feed_Icon.png')}/>
               <Text
                 style={styles.tabbartext}>
-                My Entries</Text>
+                Feed</Text>
             </View>
 
             <View
@@ -324,8 +324,8 @@ export default class Main extends Component {
                 }
 
                 // Title views for the feed route.
-                if (this.state.page === 'Feed Tab') {
-                  return(<Text style={ styles.title }>{ 'Settings' }</Text>)
+                if (this.state.page === 'FeedTab') {
+                  return(<Text style={ styles.title }>{ 'Entry Feed' }</Text>)
                 }
                 
                 return (<Text style={ styles.title }>{ 'ERROR: We haven\'t covered this route yet.' }</Text>);
