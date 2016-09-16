@@ -35,7 +35,7 @@ export default class CommentScene extends Component {
           placeholder='Write a comment right over here dude...'
           style={ [this.state.dynamicHeight(), styles.bodyWidth, styles.fadedText, styles.textBox] }
           onChangeText={ (text) => this.props.updateComment(text) }/>
-        <Comment style={ styles.comments } />
+        <Comment style={ styles.comments } postID={ this.props.postID } />
       </View>
     )
   }

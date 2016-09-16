@@ -284,6 +284,7 @@ export default class Main extends Component {
       return (
         <CommentScene
           navigator={ navigator }
+          postID={ this.state.postID }
           updateComment={ this.updateComment.bind(this) } />
       )
     }
