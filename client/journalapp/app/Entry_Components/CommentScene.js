@@ -24,20 +24,6 @@ export default class CommentScene extends Component {
     this.props.updateComment('');
   }
 
-  moveUpForKeyboardShow(){
-    setTimeout( ()=> {
-      this.setState(
-        { dynamicHeight : () => { return { height: Dimensions.get('window').height * .45 }} }
-      );
-    }, 200); 
-  }
-
-  moveDownForKeyboardHide(){
-    this.setState(
-      { dynamicHeight : () => { return {height: Dimensions.get('window').height - 49 - 70}} }
-    );
-  }
-
   render() {
     return (
       <View style={ styles.container }>
@@ -48,9 +34,7 @@ export default class CommentScene extends Component {
           maxLength={ 420 }
           placeholder='Write a comment right over here dude...'
           style={ [this.state.dynamicHeight(), styles.bodyWidth, styles.fadedText, styles.textBox] }
-          onChangeText={ (text) => this.props.updateComment(text) }
-          onFocus= { this.moveUpForKeyboardShow.bind(this) }
-          onBlur= { this.moveDownForKeyboardHide.bind(this) }/>
+          onChangeText={ (text) => this.props.updateComment(text) }/>
         <Comment style={ styles.comments } />
       </View>
     )
