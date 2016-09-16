@@ -143,6 +143,10 @@ export default class Main extends Component {
     });
   }
 
+  postComment(navigator) {
+    console.log('AWWW YEAH POSTING A COMMENT NOW');
+  }
+
   // According to the state's current page, return a certain tab view. Tab views are all stateful, and will 
   // potentially contain logic to interact with the server, or navigate to scenes using the Navigator. This 
   // is essentially the tab's router.
@@ -288,6 +292,15 @@ export default class Main extends Component {
                     <View style={ [styles.topBarView, styles.rightArrow] }>
                       <Text style={ [styles.faintText, styles.largerText] } onPress={(() => { this.postEntry(navigator); }).bind(this) } >
                         Publish
+                      </Text>
+                    </View>
+                  );
+                }
+                if ( route.title === 'CommentScene' ) {
+                  return (
+                    <View style={ [styles.topBarView, styles.rightArrow] }>
+                      <Text style={ [styles.faintText, styles.largerText] } onPress={(() => { this.postComment(navigator); }).bind(this) } >
+                        Save
                       </Text>
                     </View>
                   );
