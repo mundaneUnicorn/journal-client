@@ -24,9 +24,9 @@ export default class Comment extends Component {
     this.getComments();
   }
 
-  componentDidMount() {
-    this.render();
-  }
+  // componentDidMount() {
+  //   this.render();
+  // }
 
   getComments() {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
