@@ -53,7 +53,6 @@ export default class FeedTab extends Component {
           mainContext.setState({
             entries: ds.cloneWithRows(json)
           });
-          console.log(mainContext.state.entries);
         })
         .catch((error) => {
           console.log("fetch error on getrequest:", error)
