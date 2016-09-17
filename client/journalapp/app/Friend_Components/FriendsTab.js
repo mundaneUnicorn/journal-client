@@ -35,7 +35,7 @@ export default class FriendsTab extends Component {
     this.getFriendRequests();
   }
 
-  // This will happen when the component is mounted, and will show a list (via FriendsList) of 
+  // This will happen when the component is mounted, and will show a list (via FriendsList) of
   // friends (via Friend).
   getFriends(){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
@@ -48,8 +48,8 @@ export default class FriendsTab extends Component {
       })
       .then( resp => { resp.json()
         .then( json => {
+          console.log('HERE IS THE JSON FRIENDS: ', json);
           if (json.name !== 'SequelizeDatabaseError') {
-            console.log('HERE IS THE JSON FRIENDS: ', json);
             this.setState({ friendList: json })
           };
         })
@@ -63,7 +63,7 @@ export default class FriendsTab extends Component {
     });
   }
 
-  // This will happen when the component is mounted, and will show a list (via RequestList) of 
+  // This will happen when the component is mounted, and will show a list (via RequestList) of
   // requests (via Request).
   getFriendRequests(){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
@@ -108,7 +108,7 @@ export default class FriendsTab extends Component {
     });
   }
 
-  // Rejecting a friend request occurs on the Request view.  
+  // Rejecting a friend request occurs on the Request view.
   rejectFriendRequest(requestId){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       var req = {requestId: requestId};
@@ -134,14 +134,14 @@ export default class FriendsTab extends Component {
     return (
       <View style= { styles.container } >
         <ScrollView>
-          <RequestList 
-            requestList={ this.state.pendingRequests } 
-            acceptFriend={ this.acceptFriendRequest.bind(this) } 
+          <RequestList
+            requestList={ this.state.pendingRequests }
+            acceptFriend={ this.acceptFriendRequest.bind(this) }
             rejectFriend={ this.rejectFriendRequest.bind(this) }
             navigator={ this.props.navigator } />
-          <FriendList 
-            friendList={ this.state.friendList } 
-            navigator={ this.props.navigator } 
+          <FriendList
+            friendList={ this.state.friendList }
+            navigator={ this.props.navigator }
             updateFriend={ this.props.updateFriend }
             rerender={ () => this.getFriends() } />
         </ScrollView>
@@ -149,8 +149,3 @@ export default class FriendsTab extends Component {
     )
   }
 }
-
-
-
-
-

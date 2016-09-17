@@ -13,7 +13,7 @@ import Swipeout from 'react-native-swipeout';
 import Entry from './Entry';
 import styles from '../styles/EntryListStyles';
 
-var EntryList = ({user, token, entries, rerender, userEntries, navigator, updatePostID}) => (
+var EntryList = ({user, token, entries, rerender, userEntries, navigator, updatePostID, renderWhiteList}) => (
     <ListView
       dataSource={entries}
       style={styles.container}
@@ -44,30 +44,33 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
         return userEntries ? (
           <View>
             <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
-              <Entry 
-                    navigator={ navigator } 
-                    id={ rowData.id } 
-                    author={ rowData.user } 
-                    user={ user } 
-                    token={ token } 
-                    votes={ rowData.votes } 
-                    text={ rowData.text } 
+
+              <Entry
+                    renderWhiteList={ renderWhiteList }
+                    navigator={ navigator }
+                    id={ rowData.id }
+                    author={ rowData.user }
+                    user={ user }
+                    token={ token }
+                    votes={ rowData.votes }
+                    text={ rowData.text }
                     createdAt={ rowData.createdAt }
                     updatePostID={ updatePostID }
-                    friendPost={ false } 
+                    friendPost={ false }
                     location={ rowData.location }/>
             </Swipeout>
           </View>
         ) : (<Entry
+                 renderWhiteList={ renderWhiteList }
                  id={ rowData.id }
                  author={ rowData.user }
-                 user={ user } 
-                 token={ token } 
-                 votes={ rowData.votes } 
-                 text={ rowData.text } 
-                 createdAt={ rowData.createdAt } 
-                 friendPost={ true } 
-                 location={ rowData.location } 
+                 user={ user }
+                 token={ token }
+                 votes={ rowData.votes }
+                 text={ rowData.text }
+                 createdAt={ rowData.createdAt }
+                 friendPost={ true }
+                 location={ rowData.location }
                  updatePostID={ updatePostID }
                  navigator={ navigator }/>);
       }}/>

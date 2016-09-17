@@ -36,13 +36,16 @@ export default class Main extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
+      user: undefined,
       page: 'EntriesTab',
       entries: ds.cloneWithRows([]),
       newEntry: '',
       friendName: '',
       location: '',
       comment: '',
-      postID: ''
+      postID: '',
+      clickedEntry: '',
+      privacies: []
     };
   }
 
@@ -75,6 +78,10 @@ export default class Main extends Component {
     })
   }
 
+  updatePrivacies(privacies) {
+    this.setState({ privacies: privacies })
+  }
+
   // Use this to keep track of the user's last location.
   watchID: ?number = null;
 
@@ -83,6 +90,11 @@ export default class Main extends Component {
   // NOTE: React Native unfortunately uses navigator as a variable in their geolocation. This does not refer to
   // the Navigator component, nor an instance of it.
   componentDidMount() {
+    var mainContext = this;
+    AsyncStorage.getItem('@MySuperStore:username', function(err, res, next) {
+      mainContext.setState({user: res});
+    });
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var latLng = {lat: position.coords.longitude, lng: position.coords.latitude};
@@ -162,7 +174,7 @@ export default class Main extends Component {
 
   postComment(navigator) {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      var newComment = { 
+      var newComment = {
         id: this.state.postID,
         comment: this.state.comment
       };
@@ -182,11 +194,44 @@ export default class Main extends Component {
     })
   }
 
+  renderWhiteList(entryId, navigator) {
+    this.setState({'clickedEntry': entryId});
+    navigator.push({title: 'WhiteListScene'});
+    console.log('Render white list has been called')
+  }
+
+  setPrivacies(privacies, clickedEntry, navigator) {
+    var userIds = privacies.map(function(privEntry) {
+      return privEntry.userId;
+    })
+
+    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      fetch('http://localhost:3000/api/privacy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify({
+          userIds: userIds,
+          entryId: clickedEntry
+        })
+      })
+      .then(data => {
+        navigator.pop();
+        console.log('Server results: ', data)
+      })
+      .catch(err => {
+        console.log('This is the error: ', err);
+      });
+    });
+  }
   // According to the state's current page, return a certain tab view. Tab views are all stateful, and will
   // potentially contain logic to interact with the server, or navigate to scenes using the Navigator. This
   // is essentially the tab's router.
   renderTab(navigator) {
     if (this.state.page === "EntriesTab") return <EntriesTab
+                                                    renderWhiteList = { this.renderWhiteList.bind(this) }
                                                     navigator={navigator}
                                                     getEntries={ this.getEntries.bind(this) }
                                                     rerender={ () => this.getEntries() }
@@ -292,7 +337,10 @@ export default class Main extends Component {
     } else if (route.title === 'WhiteListScene') {
       return (
         <WhiteListScene
-          navigator={ navigator } />
+          clickedEntry={ this.state.clickedEntry }
+          navigator={ navigator }
+          updatePrivacies={ this.updatePrivacies.bind(this) }
+          user={ this.state.user } />
       )
     }
   }
@@ -335,7 +383,7 @@ export default class Main extends Component {
               },
 
               RightButton: (route, navigator, index, navState) => {
-                if ( this.state.page === 'FriendsTab' && route.title !== 'SearchFriends' && route.title !== 'FriendPage' && route.title !== 'CommentScene'){
+                if ( this.state.page === 'FriendsTab' && route.title !== 'SearchFriends' && route.title !== 'FriendPage' && route.title !== 'CommentScene' && route.title !== 'WhiteListScene'){
                   return (
                     <View style={ [styles.topBarView, styles.rightArrow] }>
                       <Text onPress={()=>{ navigator.push({title: 'SearchFriends'}) }} >
@@ -361,6 +409,15 @@ export default class Main extends Component {
                       </Text>
                     </View>
                   );
+                }
+                if ( route.title === 'WhiteListScene' ) {
+                  return (
+                    <View style={ [styles.topBarView, styles.rightArrow] }>
+                      <Text style={ [styles.faintText, styles.largerText] } onPress={ () => this.setPrivacies(this.state.privacies, this.state.clickedEntry, navigator)} >
+                        Save
+                      </Text>
+                    </View>
+                  )
                 }
               },
 
