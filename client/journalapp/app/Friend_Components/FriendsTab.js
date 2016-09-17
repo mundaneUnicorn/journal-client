@@ -39,7 +39,7 @@ export default class FriendsTab extends Component {
   // friends (via Friend).
   getFriends(){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      fetch('http://localhost:3000/api/friends', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/friends', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default class FriendsTab extends Component {
   // requests (via Request).
   getFriendRequests(){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      fetch('http://localhost:3000/api/friendreq', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/friendreq', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export default class FriendsTab extends Component {
   acceptFriendRequest(requestId){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       var message = {requestId:requestId};
-      fetch('http://localhost:3000/api/friendreq', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/friendreq', {
         method: 'POST',
         headers: {
          'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ export default class FriendsTab extends Component {
   rejectFriendRequest(requestId){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       var req = {requestId: requestId};
-      fetch('http://localhost:3000/api/friendreq', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/friendreq', {
         method: 'DELETE',
         headers: {
          'Content-Type': 'application/json',

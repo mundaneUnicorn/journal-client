@@ -46,7 +46,7 @@ export default class Entry extends Component {
 
   likePost() {
     var entryContext = this;
-    fetch('http://localhost:3000/api/likes', {
+    fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/likes', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
