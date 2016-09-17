@@ -322,7 +322,7 @@ export default class Main extends Component {
             routeMapper={{
 
               LeftButton(route, navigator, index, navState) {
-                if ( route.title === 'FriendPage' || route.title === 'SearchFriends' || route.title === 'PasswordScene' || route.title === 'CommentScene'){
+                if ( route.title === 'FriendPage' || route.title === 'SearchFriends' || route.title === 'PasswordScene' || route.title === 'CommentScene' || route.title === 'WhiteListScene'){
                   return (
                     <View style={ styles.topBarView }>
                       <Text onPress={ ()=>{ navigator.pop() }} >

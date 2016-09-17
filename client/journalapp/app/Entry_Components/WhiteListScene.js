@@ -19,21 +19,48 @@ export default class WhiteListScene extends Component {
     console.log('WhitListScene entryId: ', this.props.clickedEntry);
   }
 
-  // componentWillMount() {
-  //   getInitialPrivacies();
-  // }
-  //
-  // getInitialPrivacies(entryId) {
-  //   AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-  //     fetch('http://localhost:3000/api/entries', {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'x-access-token': token
-  //       }
-  //     });
-  //   });
-  // }
+  componentWillMount() {
+    this.getInitialPrivacies();
+  }
+
+  setPrivacies() {
+    var userIds = this.state.privacies.map(function(privEntry) {
+      return privEntry.userId;
+    })
+
+    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      fetch('http://localhost:3000/api/privacy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify({
+          userIds: userIds,
+          entryId: this.props.clickedEntry
+        })
+      })
+      .then(data => console.log('Server results: ', data))
+    });
+  }
+
+  getInitialPrivacies(entryId) {
+    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      fetch('http://localhost:3000/api/privacy?entryId=2', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        }
+      })
+      // .then( res =>  console.log( 'getInitialPrivacies response: ', res.json() ))
+      .then(res => {
+        res.json().then(results => {
+          console.log(results);
+        })
+      })
+    });
+  }
 
   render() {
     return (
@@ -60,9 +87,6 @@ export default class WhiteListScene extends Component {
             onChange={ () => this.setState({none: !this.state.none, all: !this.state.all }) }
           />
         </View>
-        <SearchFriends
-          navigator={ navigator }
-          placeholder={ 'Who can read this?' }/>
       </View>
     );
   }
