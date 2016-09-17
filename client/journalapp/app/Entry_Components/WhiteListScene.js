@@ -176,12 +176,12 @@ export default class WhiteListScene extends Component {
             onChange={ () => {
               var pub = this.state.public;
               this.setState({
-                public: !pub, 
-                private: pub, 
-                privacies: pub ? [] : [{ userId: this.state.currentUserId, entryId: this.props.clickedEntry }],
+                public: true, 
+                private: false, 
+                privacies: [],
                 checks: {}
               });
-              this.props.updatePrivacies(pub ? [] : [-10]);
+              this.props.updatePrivacies([]);
             }}
           />
         </View>
@@ -193,12 +193,12 @@ export default class WhiteListScene extends Component {
             onChange={ () => {
               var priv = this.state.priv;
               this.setState({
-                private: !priv, 
-                public: priv, 
-                privacies: priv ? [{userId: this.state.currentUserId, entryId: this.props.clickedEntry}] : [],
+                private: true, 
+                public: false, 
+                privacies: [{userId: this.state.currentUserId, entryId: this.props.clickedEntry}],
                 checks: {}
               });
-              this.props.updatePrivacies(priv ? [-10] : []);
+              this.props.updatePrivacies([-10]);
             }}
           />
         </View>
