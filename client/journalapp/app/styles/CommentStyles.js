@@ -33,15 +33,18 @@ var styles = StyleSheet.create({
   namedate: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     height: 20
   },
   name: {
     color: '#1e90ff',
     fontWeight: '600',
-    paddingRight: 10
+    paddingRight: 10,
+    alignSelf: 'flex-start'
   },
   date: {
     color: '#d3d3d3',
+    alignSelf: 'flex-end'
   },
   message: {
     paddingLeft: 15,
