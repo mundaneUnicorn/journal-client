@@ -17,7 +17,7 @@ var FriendList = (props) => {
 
   var deleteFriend = function(friend) {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      fetch('http://localhost:3000/api/friends', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/friends', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

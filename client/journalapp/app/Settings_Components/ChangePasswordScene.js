@@ -50,7 +50,7 @@ export default class ChangePassword extends Component {
         username: username,
         password: this.state.oldPW
       });
-      fetch('http://localhost:3000/api/signin', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ export default class ChangePassword extends Component {
         username: username,
         password: newPassword
       });
-      fetch('http://localhost:3000/api/users', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/users', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

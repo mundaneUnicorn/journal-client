@@ -23,7 +23,7 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
           backgroundColor: 'red',
           onPress: () => {
             AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-              fetch('http://localhost:3000/api/entries', {
+              fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/entries', {
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
