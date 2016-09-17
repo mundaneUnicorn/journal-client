@@ -28,7 +28,7 @@ export default class WhiteListScene extends Component {
 
   getInitialPrivacies(entryId) {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      fetch(`http://localhost:3000/api/privacy?entryId=${entryId}`, {
+      fetch(`http://journal-app-mundane-unicorns.herokuapp.com/api/privacy?entryId=${entryId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
