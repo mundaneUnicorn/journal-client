@@ -20,7 +20,7 @@ export default class WhiteListScene extends Component {
       public: true,
       private: false,
       // Specific will be for the friends who have been clicked
-      privacies: [],
+      privacies: [this.props.user],
       friendList: ds.cloneWithRows([])
     }
   }
@@ -95,16 +95,23 @@ export default class WhiteListScene extends Component {
           <CheckBox
             checkboxStyle={{width: 18, height: 18}}
             label='Public'
-            checked={this.state.all}
-            onChange={ () => this.setState({all: !this.state.all, none: !this.state.none }) }
+            checked={this.state.public}
+            onChange={ () => {
+              this.setState({public: !this.state.public, private: !this.state.private });
+              this.props.updatePrivacies([]);
+            }
+
           />
         </View>
         <View style={{ paddingLeft: 6 }}>
           <CheckBox
             checkboxStyle={{width: 18, height: 18}}
             label='Private'
-            checked={this.state.none}
-            onChange={ () => this.setState({none: !this.state.none, all: !this.state.all }) }
+            checked={this.state.private}
+            onChange={ () => {
+              this.setState({private: !this.state.private, public: !this.state.public })
+              this.updatePrivacies([this.props.user]);
+            }
           />
         </View>
         <ListView

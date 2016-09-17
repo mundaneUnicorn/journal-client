@@ -36,6 +36,7 @@ export default class Main extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
+      user: undefined,
       page: 'EntriesTab',
       entries: ds.cloneWithRows([]),
       newEntry: '',
@@ -89,6 +90,10 @@ export default class Main extends Component {
   // NOTE: React Native unfortunately uses navigator as a variable in their geolocation. This does not refer to
   // the Navigator component, nor an instance of it.
   componentDidMount() {
+    AsyncStorage.getItem('@MySuperStore:username', function(err, res, next) {
+      this.setState({user: res});
+    });
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var latLng = {lat: position.coords.longitude, lng: position.coords.latitude};
@@ -214,6 +219,9 @@ export default class Main extends Component {
       .then(data => {
         navigator.pop();
         console.log('Server results: ', data)
+      })
+      .catch(err => {
+        console.log('This is the error: ', err);
       });
     });
   }
@@ -330,7 +338,8 @@ export default class Main extends Component {
         <WhiteListScene
           clickedEntry={ this.state.clickedEntry }
           navigator={ navigator }
-          updatePrivacies={ this.updatePrivacies.bind(this) } />
+          updatePrivacies={ this.updatePrivacies.bind(this) }
+          user={ this.state.user } />
       )
     }
   }
