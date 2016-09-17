@@ -10,9 +10,9 @@ var styles = StyleSheet.create({
     alignItems: 'center'
   },
   header: {
-    height: 30,
-    marginBottom: 5,
-    fontWeight: '600'
+    height: 25,
+    fontWeight: '700',
+    fontSize: 20
   },
   listView: {
     width: Dimensions.get('window').width * 0.96,
@@ -21,7 +21,23 @@ var styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 8,
-    backgroundColor: 'red',
+  },
+  comment: {
+    borderBottomWidth: 1,
+    borderColor: '#dcdcdc',
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingBottom: 5,
+    marginBottom: 10
+  },
+  name: {
+    color: '#1e90ff',
+    height: 20,
+    fontWeight: '600'
+  },
+  message: {
+    paddingLeft: 15,
+    paddingRight: 15
   }
 })
 

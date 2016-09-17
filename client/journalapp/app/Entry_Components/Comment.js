@@ -24,9 +24,9 @@ export default class Comment extends Component {
     this.getComments();
   }
 
-  // componentDidMount() {
-  //   this.render();
-  // }
+  componentDidMount() {
+    this.render();
+  }
 
   getComments() {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
@@ -55,7 +55,10 @@ export default class Comment extends Component {
   renderRow(rowData) {
     console.log('row data: ', rowData);
     return (
-      <Text>{rowData.message}</Text>
+      <View style={ styles.comment } >
+        <Text style={ styles.name }>{rowData.fullname + ':'}</Text>
+        <Text style={ styles.message }>{rowData.message}</Text>
+      </View>
     )
   }
 
