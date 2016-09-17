@@ -52,7 +52,8 @@ export default class FeedTab extends Component {
           const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
           mainContext.setState({
             entries: ds.cloneWithRows(json)
-          })
+          });
+          console.log(mainContext.state.entries);
         })
         .catch((error) => {
           console.log("fetch error on getrequest:", error)
