@@ -99,8 +99,7 @@ export default class WhiteListScene extends Component {
             onChange={ () => {
               this.setState({public: !this.state.public, private: !this.state.private });
               this.props.updatePrivacies([]);
-            }
-
+            } }
           />
         </View>
         <View style={{ paddingLeft: 6 }}>
@@ -109,9 +108,9 @@ export default class WhiteListScene extends Component {
             label='Private'
             checked={this.state.private}
             onChange={ () => {
-              this.setState({private: !this.state.private, public: !this.state.public })
-              this.updatePrivacies([this.props.user]);
-            }
+              this.setState({private: !this.state.private, public: !this.state.public });
+              this.props.updatePrivacies([this.props.user]);
+            } }
           />
         </View>
         <ListView

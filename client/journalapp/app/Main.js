@@ -90,8 +90,9 @@ export default class Main extends Component {
   // NOTE: React Native unfortunately uses navigator as a variable in their geolocation. This does not refer to
   // the Navigator component, nor an instance of it.
   componentDidMount() {
+    var mainContext = this;
     AsyncStorage.getItem('@MySuperStore:username', function(err, res, next) {
-      this.setState({user: res});
+      mainContext.setState({user: res});
     });
 
     navigator.geolocation.getCurrentPosition(
