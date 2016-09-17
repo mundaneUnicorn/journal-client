@@ -44,12 +44,11 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
         return userEntries ? (
           <View>
             <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
-
               <Entry
                     renderWhiteList={ renderWhiteList }
                     navigator={ navigator }
                     id={ rowData.id }
-                    author={ rowData.user }
+                    author={ rowData.fullname }
                     user={ user }
                     token={ token }
                     votes={ rowData.votes }
@@ -63,7 +62,7 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
         ) : (<Entry
                  renderWhiteList={ renderWhiteList }
                  id={ rowData.id }
-                 author={ rowData.user }
+                 author={ rowData.fullname }
                  user={ user }
                  token={ token }
                  votes={ rowData.votes }
