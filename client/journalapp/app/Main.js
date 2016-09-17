@@ -43,7 +43,8 @@ export default class Main extends Component {
       location: '',
       comment: '',
       postID: '',
-      clickedEntry: ''
+      clickedEntry: '',
+      privacies: []
     };
   }
 
@@ -74,6 +75,10 @@ export default class Main extends Component {
     this.setState({
       postID: id
     })
+  }
+
+  updatePrivacies(privacies) {
+    this.setState({ privacies: privacies })
   }
 
   // Use this to keep track of the user's last location.
@@ -189,6 +194,31 @@ export default class Main extends Component {
     console.log('Render white list has been called')
   }
 
+  setPrivacies(privacies, clickedEntry, navigator) {
+    var userIds = privacies.map(function(privEntry) {
+      return privEntry.userId;
+    })
+
+    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      fetch('http://localhost:3000/api/privacy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify({
+          userIds: userIds,
+          entryId: clickedEntry
+        })
+      })
+      .then(data => {
+        navigator.pop();
+        console.log('Server results: ', data)
+      });
+    });
+  }
+
+
   // According to the state's current page, return a certain tab view. Tab views are all stateful, and will
   // potentially contain logic to interact with the server, or navigate to scenes using the Navigator. This
   // is essentially the tab's router.
@@ -299,7 +329,8 @@ export default class Main extends Component {
       return (
         <WhiteListScene
           clickedEntry={ this.state.clickedEntry }
-          navigator={ navigator } />
+          navigator={ navigator }
+          updatePrivacies={ this.updatePrivacies.bind(this) } />
       )
     }
   }
@@ -342,7 +373,7 @@ export default class Main extends Component {
               },
 
               RightButton: (route, navigator, index, navState) => {
-                if ( this.state.page === 'FriendsTab' && route.title !== 'SearchFriends' && route.title !== 'FriendPage' && route.title !== 'CommentScene'){
+                if ( this.state.page === 'FriendsTab' && route.title !== 'SearchFriends' && route.title !== 'FriendPage' && route.title !== 'CommentScene' && route.title !== 'WhiteListScene'){
                   return (
                     <View style={ [styles.topBarView, styles.rightArrow] }>
                       <Text onPress={()=>{ navigator.push({title: 'SearchFriends'}) }} >
@@ -368,6 +399,15 @@ export default class Main extends Component {
                       </Text>
                     </View>
                   );
+                }
+                if ( route.title === 'WhiteListScene' ) {
+                  return (
+                    <View style={ [styles.topBarView, styles.rightArrow] }>
+                      <Text style={ [styles.faintText, styles.largerText] } onPress={ () => this.setPrivacies(this.state.privacies, this.state.clickedEntry, navigator)} >
+                        Save
+                      </Text>
+                    </View>
+                  )
                 }
               },
 

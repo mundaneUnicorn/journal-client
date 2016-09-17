@@ -23,26 +23,26 @@ export default class WhiteListScene extends Component {
     this.getInitialPrivacies();
   }
 
-  setPrivacies() {
-    var userIds = this.state.privacies.map(function(privEntry) {
-      return privEntry.userId;
-    })
-
-    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      fetch('http://localhost:3000/api/privacy', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': token
-        },
-        body: JSON.stringify({
-          userIds: userIds,
-          entryId: this.props.clickedEntry
-        })
-      })
-      .then(data => console.log('Server results: ', data))
-    });
-  }
+  // setPrivacies() {
+  //   var userIds = this.state.privacies.map(function(privEntry) {
+  //     return privEntry.userId;
+  //   })
+  //
+  //   AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+  //     fetch('http://localhost:3000/api/privacy', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'x-access-token': token
+  //       },
+  //       body: JSON.stringify({
+  //         userIds: userIds,
+  //         entryId: this.props.clickedEntry
+  //       })
+  //     })
+  //     .then(data => console.log('Server results: ', data))
+  //   });
+  // }
 
   getInitialPrivacies(entryId) {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
@@ -56,7 +56,8 @@ export default class WhiteListScene extends Component {
       // .then( res =>  console.log( 'getInitialPrivacies response: ', res.json() ))
       .then(res => {
         res.json().then(results => {
-          console.log(results);
+          this.setState({ privacies: results });
+          this.props.updatePrivacies(results);
         })
       })
     });
