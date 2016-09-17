@@ -17,17 +17,18 @@ export default class WhiteListScene extends Component {
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      public: true,
-      private: false,
-      // Specific will be for the friends who have been clicked
-      privacies: [this.props.user],
-      friendList: ds.cloneWithRows([])
+      public: null,
+      private: null,
+      privacies: [],
+      friendList: ds.cloneWithRows([]),
+      checks: {},
+      currentUserId: null
     }
   }
 
   getInitialPrivacies(entryId) {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      fetch('http://localhost:3000/api/privacy?entryId=2', {
+      fetch(`http://localhost:3000/api/privacy?entryId=${entryId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -36,15 +37,31 @@ export default class WhiteListScene extends Component {
       })
       .then(res => {
         res.json().then(results => {
-          this.setState({ privacies: results });
-          this.props.updatePrivacies(results);
+          /*
+          results is an object looking like:
+          {
+            privacies: [array of privacy objects],
+            currentuserid: NUMBER
+          }
+          */
+          console.log('PRIVACIES RETURNED FROM SERVER: ', results)
+
+          this.setState({ privacies: results.privacies, currentUserId: results.currentUserId });
+          this.props.updatePrivacies(results.privacies);
+
+          var checkmarks = {};
+          results.privacies.forEach(obj => {
+            checkmarks[obj.userId] = true;
+          })
+          this.setState({ checks: checkmarks });
+          this.check();
         })
       })
     });
   }
 
   componentWillMount() {
-    this.getInitialPrivacies();
+    this.getInitialPrivacies(this.props.clickedEntry);
     this.fetchFriends();
   }
 
@@ -61,10 +78,9 @@ export default class WhiteListScene extends Component {
           'x-access-token': token
         }
       })
-      .then( resp => { resp.json()
-        .then( json => {
+      .then( resp => { 
+        resp.json().then( json => {
           if (json.name !== 'SequelizeDatabaseError') {
-            console.log('HERE IS THE JSON FRIENDS: ', json);
             const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             this.setState({
               friendList: ds.cloneWithRows(json)
@@ -72,18 +88,79 @@ export default class WhiteListScene extends Component {
           };
         }).catch((error) => {
           console.log("error on json():", error)
-        });
+        })
       }).catch( error => {
         console.log("error on fetch()", error)
       });
     });
   }
 
+  check() {
+    if (!this.state.privacies.length) {
+      this.setState({ public: true, private: false });
+      return true;
+    } else if (this.state.privacies.length === 1) {
+      this.setState({ public: false, private: true });
+      return false;
+    } else {
+      this.setState({
+        public: false,
+        private: false
+      })
+    }
+  }
+
   renderRow(rowData) {
-    console.log('rowData for friends: ', rowData);
     return (
       <View style={ styles.friend }>
-        <Text>{ rowData.fullname }</Text>
+        <CheckBox 
+          checkboxStyle={ styles.checkbox }
+          label={ rowData.fullname }
+          checked={ this.state.public ? true : (this.state.private ? false : (this.state.checks[rowData.id] || false)) }
+          onChange={ () => {
+            var entry = this.props.clickedEntry;
+            var obj = JSON.parse(JSON.stringify(this.state.checks));
+            obj[rowData.id] = !obj[rowData.id];
+            this.setState({
+              checks: obj
+            })
+            console.log('checks: ', obj);
+            var privacyArr = this.state.privacies.length ? this.state.privacies : [{ userId: this.state.currentUserId, entryId: entry }];
+
+            ids = this.state.privacies.map(item => {
+              return item.userId;
+            })
+            var i = ids.indexOf(rowData.id);
+            if (i < 0) {
+              privacyArr.push({ userId: rowData.id, entryId: entry });
+            } else {
+              privacyArr.splice(i, 1);
+            }
+
+            if (privacyArr.length === 1) {
+              this.setState({
+                public: false,
+                private: true,
+                checks: {}
+              })
+              this.props.updatePrivacies([-10]);
+            } else if (privacyArr.length === this.state.friendList.rowIdentities[0].length + 1) {
+              this.setState({
+                privacies: [],
+                public: true,
+                private: false
+              });
+              this.props.updatePrivacies([]);
+            } else {
+              this.setState({
+                privacies: privacyArr,
+                public: false,
+                private: false
+              })
+              this.props.updatePrivacies(privacyArr);
+            }
+            console.log('privacy arr: ', privacyArr);
+          } } />
       </View>
     )
   }
@@ -93,24 +170,36 @@ export default class WhiteListScene extends Component {
       <View style={ styles.container }>
         <View style={{ paddingLeft: 6 }}>
           <CheckBox
-            checkboxStyle={{width: 18, height: 18}}
+            checkboxStyle={ styles.checkbox }
             label='Public'
             checked={this.state.public}
             onChange={ () => {
-              this.setState({public: !this.state.public, private: !this.state.private });
-              this.props.updatePrivacies([]);
-            } }
+              var pub = this.state.public;
+              this.setState({
+                public: !pub, 
+                private: pub, 
+                privacies: pub ? [] : [{ userId: this.state.currentUserId, entryId: this.props.clickedEntry }],
+                checks: {}
+              });
+              this.props.updatePrivacies(pub ? [] : [-10]);
+            }}
           />
         </View>
         <View style={{ paddingLeft: 6 }}>
           <CheckBox
-            checkboxStyle={{width: 18, height: 18}}
+            checkboxStyle={ styles.checkbox }
             label='Private'
             checked={this.state.private}
             onChange={ () => {
-              this.setState({private: !this.state.private, public: !this.state.public });
-              this.props.updatePrivacies([this.props.user]);
-            } }
+              var priv = this.state.priv;
+              this.setState({
+                private: !priv, 
+                public: priv, 
+                privacies: priv ? [{userId: this.state.currentUserId, entryId: this.props.clickedEntry}] : [],
+                checks: {}
+              });
+              this.props.updatePrivacies(priv ? [-10] : []);
+            }}
           />
         </View>
         <ListView
@@ -121,3 +210,24 @@ export default class WhiteListScene extends Component {
     );
   }
 }
+
+
+// initial get request will give me an object containing: 
+// (1) your own userId
+// (2) and an array of privacy objects
+
+// {
+//   privacies: [PRIVACY OBJECTS],
+//   currentUserId: INTEGER
+// }
+
+// the privacy objects will have the userId (of the whitelisted friend) and entryId:
+
+// {
+//   userId: INTEGER,
+//   entryId: INTEGER
+// }
+
+// IF IT'S PUBLIC THEN THE PRIVACIES ARRAY IS EMPTY
+// IF IT'S PRIVATE THEN THE PRIVACIES ARRAY WILL HAVE ONLY THE CURRENT USER ID
+// OTHERWISE THE PRIVACIES ARRAY WILL HAVE THE USER IDS OF THE WHITELISTED FRIENDS PLUS CURRENT USER

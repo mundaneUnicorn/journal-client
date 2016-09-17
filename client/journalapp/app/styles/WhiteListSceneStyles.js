@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
   },
   friend: {
     borderBottomWidth: 1
+  },
+  checkbox: {
+    width: 18,
+    height: 18,
   }
 })
 

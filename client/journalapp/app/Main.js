@@ -201,9 +201,15 @@ export default class Main extends Component {
   }
 
   setPrivacies(privacies, clickedEntry, navigator) {
-    var userIds = privacies.map(function(privEntry) {
-      return privEntry.userId;
-    })
+    var userIds;
+    if (privacies.length === 1) {
+      userIds = [-10];
+    } else {
+      userIds = privacies.map(function(obj) {
+        return obj.userId;
+      })
+    }
+    console.log('userIds: ', userIds);
 
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       fetch('http://localhost:3000/api/privacy', {
