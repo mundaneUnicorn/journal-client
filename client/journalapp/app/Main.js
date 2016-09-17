@@ -198,7 +198,8 @@ export default class Main extends Component {
                                                     navigator={navigator}
                                                     signOut={ this.props.signOut }/>;
     if (this.state.page === 'FeedTab') return <FeedTab
-                                                    navigator={navigator}/>
+                                                    navigator={navigator}
+                                                    updatePostID={ this.updatePostID.bind(this) }/>
   }
 
   // This logic applies routing according the title of the current route. It will be activated whenever the

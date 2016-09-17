@@ -5,7 +5,7 @@ import {
   TextInput,
   ListView,
   View,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 
 // VB: Refactored require to use import, for consistency
@@ -45,20 +45,32 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
         return userEntries ? (
           <View>
             <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
-              <Entry navigator={ navigator } id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
+              <Entry 
+                    navigator={ navigator } 
+                    id={ rowData.id } 
+                    author={ rowData.user } 
+                    user={ user } 
+                    token={ token } 
+                    votes={ rowData.votes } 
+                    text={ rowData.text } 
+                    createdAt={ rowData.createdAt }
+                    updatePostID={ updatePostID }
+                    friendPost={ false } 
+                    location={ rowData.location }/>
             </Swipeout>
           </View>
         ) : (<Entry
                  id={ rowData.id }
-                 user={ user }
-                 token={ token }
-                 votes={ rowData.votes }
-                 text={ rowData.text }
-                 createdAt={ rowData.createdAt }
-                 friendPost={ true }
-                 location={ rowData.location }
+                 author={ rowData.user }
+                 user={ user } 
+                 token={ token } 
+                 votes={ rowData.votes } 
+                 text={ rowData.text } 
+                 createdAt={ rowData.createdAt } 
+                 friendPost={ true } 
+                 location={ rowData.location } 
                  updatePostID={ updatePostID }
-                 navigator={ navigator }/>)
+                 navigator={ navigator }/>);
       }}/>
 )
 

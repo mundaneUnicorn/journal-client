@@ -103,13 +103,13 @@ export default class Entry extends Component {
         <TouchableHighlight style={ styles.commentContainer } underlayColor='#dcdcdc' onPress={ this.addComment.bind(this) }>
           <Text style={ styles.rating } style={{color: 'blue'}}>Comment</Text>
         </TouchableHighlight>
-      )
+      );
     }
   }
 
   addComment() {
     this.updateCurrentEntry();
-    this.props.navigator.push({ title: 'CommentScene' })
+    this.props.navigator.push({ title: 'CommentScene' });
   }
 
   render() {
@@ -118,16 +118,16 @@ export default class Entry extends Component {
         <View style={ this.state.entryStyle }>
           <View style={ styles.row }>
             <View style={ styles.rowHeader }>
+              <Text style={ styles.authorName }>
+                { this.props.author ? this.props.author.fullname + ': ' : '' }
+              </Text>
               <Text style={ styles.date }>
                 { parseDate(this.props.createdAt) }
-              </Text>
-              <Text style={ styles.location }>
-                { this.props.location }
               </Text>
             </View>
             <View style={ styles.rowBody }>
               <Text style={ styles.entryText }>
-                { this.props.text }
+                { this.props.text }     
               </Text>
 
               <View style={ styles.commentratingContainer }>
