@@ -37,7 +37,7 @@ export default class FeedTab extends Component {
   getAllFriendsPosts() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var mainContext = this;
-    var url = 'http://localhost:3000/api/entries/?userId=*';
+    var url = 'http://journal-app-mundane-unicorns.herokuapp.com/api/entries/?userId=*';
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       fetch(url, {
         method: 'GET',
@@ -52,7 +52,7 @@ export default class FeedTab extends Component {
           const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
           mainContext.setState({
             entries: ds.cloneWithRows(json)
-          })
+          });
         })
         .catch((error) => {
           console.log("fetch error on getrequest:", error)

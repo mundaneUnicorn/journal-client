@@ -71,7 +71,7 @@ export default class WhiteListScene extends Component {
 
   fetchFriends() {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      fetch('http://localhost:3000/api/friends', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/friends', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

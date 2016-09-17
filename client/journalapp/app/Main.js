@@ -125,7 +125,7 @@ export default class Main extends Component {
   // mount and also after the user makes a new entry (so it'll autorefresh the entry list).
   getEntries(){
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      fetch('http://localhost:3000/api/entries', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/entries', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ export default class Main extends Component {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       var newEntry = { text: this.state.newEntry, location: this.state.location };
 
-      fetch('http://localhost:3000/api/entries', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/entries', {
         method: 'POST',
         headers: {
          'Content-Type': 'application/json',
@@ -179,7 +179,7 @@ export default class Main extends Component {
         comment: this.state.comment
       };
 
-      fetch('http://localhost:3000/api/comment', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/comment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -212,7 +212,7 @@ export default class Main extends Component {
     console.log('userIds: ', userIds);
 
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      fetch('http://localhost:3000/api/privacy', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/privacy', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

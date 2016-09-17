@@ -38,7 +38,7 @@ export default class SignupTab extends Component {
     });
 
     if (this.formStatus()){
-      fetch('http://localhost:3000/api/signup', {
+      fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
