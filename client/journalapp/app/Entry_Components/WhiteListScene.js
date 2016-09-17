@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View } from 'react-native';
+import { AppRegistry, Text, View, AsyncStorage } from 'react-native';
 import CheckBox from 'react-native-checkbox';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SearchFriends from '../Friend_Components/SearchFriends';
+
 
 export default class WhiteListScene extends Component {
   constructor(props) {
@@ -12,10 +13,27 @@ export default class WhiteListScene extends Component {
     this.state = {
       all: true,
       none: false,
-      // Specific will be for the friends who have been clicked
-      specific: ['Jim', 'Dwight']
+      whiteList: false,
+      privacies: []
     }
+    console.log('WhitListScene entryId: ', this.props.clickedEntry);
   }
+
+  // componentWillMount() {
+  //   getInitialPrivacies();
+  // }
+  //
+  // getInitialPrivacies(entryId) {
+  //   AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+  //     fetch('http://localhost:3000/api/entries', {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'x-access-token': token
+  //       }
+  //     });
+  //   });
+  // }
 
   render() {
     return (

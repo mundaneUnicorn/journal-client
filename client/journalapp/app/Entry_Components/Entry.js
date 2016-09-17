@@ -112,9 +112,11 @@ export default class Entry extends Component {
     this.props.navigator.push({ title: 'CommentScene' })
   }
 
+
+
   render() {
     return (
-      <TouchableHighlight onPress={ () => this.props.navigator.push({title: 'WhiteListScene'}) }>
+      <TouchableHighlight onPress={ this.props.renderWhiteList(this.props.id, this.props.navigator) }>
         <View style={ this.state.entryStyle }>
           <View style={ styles.row }>
             <View style={ styles.rowHeader }>

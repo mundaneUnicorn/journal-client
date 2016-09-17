@@ -14,7 +14,7 @@ import Entry from './Entry';
 import Comment from './Comment';
 import styles from '../styles/EntryListStyles';
 
-var EntryList = ({user, token, entries, rerender, userEntries, navigator, updatePostID}) => (
+var EntryList = ({user, token, entries, rerender, userEntries, navigator, updatePostID, renderWhiteList}) => (
     <ListView
       dataSource={entries}
       style={styles.container}
@@ -45,10 +45,11 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
         return userEntries ? (
           <View>
             <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
-              <Entry navigator={ navigator } id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
+              <Entry renderWhiteList={ renderWhiteList } navigator={ navigator } id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
             </Swipeout>
           </View>
         ) : (<Entry
+                 renderWhiteList={ renderWhiteList }
                  id={ rowData.id }
                  user={ user }
                  token={ token }

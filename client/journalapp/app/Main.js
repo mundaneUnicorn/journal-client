@@ -42,7 +42,8 @@ export default class Main extends Component {
       friendName: '',
       location: '',
       comment: '',
-      postID: ''
+      postID: '',
+      clickedEntry: ''
     };
   }
 
@@ -162,7 +163,7 @@ export default class Main extends Component {
 
   postComment(navigator) {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-      var newComment = { 
+      var newComment = {
         id: this.state.postID,
         comment: this.state.comment
       };
@@ -182,11 +183,18 @@ export default class Main extends Component {
     })
   }
 
+  renderWhiteList(entryId, navigator) {
+    this.setState({'clickedEntry': entryId});
+    navigator.push({title: 'WhiteListScene'});
+    console.log('Render white list has been called')
+  }
+
   // According to the state's current page, return a certain tab view. Tab views are all stateful, and will
   // potentially contain logic to interact with the server, or navigate to scenes using the Navigator. This
   // is essentially the tab's router.
   renderTab(navigator) {
     if (this.state.page === "EntriesTab") return <EntriesTab
+                                                    renderWhiteList = { this.renderWhiteList.bind(this) }
                                                     navigator={navigator}
                                                     getEntries={ this.getEntries.bind(this) }
                                                     rerender={ () => this.getEntries() }
@@ -290,6 +298,7 @@ export default class Main extends Component {
     } else if (route.title === 'WhiteListScene') {
       return (
         <WhiteListScene
+          clickedEntry={ this.state.clickedEntry }
           navigator={ navigator } />
       )
     }
