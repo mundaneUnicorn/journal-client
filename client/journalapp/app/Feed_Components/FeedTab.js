@@ -50,8 +50,6 @@ export default class FeedTab extends Component {
         .then( json => {
           console.log('Fetched friends posts', json);
           const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-          console.log('jkl;', ds.cloneWithRows(json));
-          console.log('asdf', mainContext.state.entries);
           mainContext.setState({
             entries: ds.cloneWithRows(json)
           })
@@ -83,7 +81,14 @@ export default class FeedTab extends Component {
     // the post new entry view. The onPress method of the Button here sets this off. 
     return (
       <View style={ styles.container }>
-        <EntryList user={ this.state.user } token={ this.state.token } entries={ this.state.entries } rerender={ this.getAllFriendsPosts.bind(this) } userEntries={ false } />
+        <EntryList 
+            navigator={ this.props.navigator } 
+            updatePostID={ this.props.updatePostID } 
+            user={ this.state.user } 
+            token={ this.state.token } 
+            entries={ this.state.entries } 
+            rerender={ this.getAllFriendsPosts.bind(this) } 
+            userEntries={ false } />
       </View>
 
      )

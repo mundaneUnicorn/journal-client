@@ -1,48 +1,29 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, AsyncStorage } from 'react-native';
+import {
+  AppRegistry,
+  Text,
+  View,
+  AsyncStorage,
+  ListView } from 'react-native';
 import CheckBox from 'react-native-checkbox';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import SearchFriends from '../Friend_Components/SearchFriends';
-
+import styles from '../styles/WhiteListSceneStyles';
 
 export default class WhiteListScene extends Component {
   constructor(props) {
     super(props);
     this.props = props;
+
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      all: true,
-      none: false,
-      whiteList: false,
-      privacies: []
+      public: true,
+      private: false,
+      // Specific will be for the friends who have been clicked
+      privacies: [],
+      friendList: ds.cloneWithRows([])
     }
-    console.log('WhitListScene entryId: ', this.props.clickedEntry);
   }
-
-  componentWillMount() {
-    this.getInitialPrivacies();
-  }
-
-  // setPrivacies() {
-  //   var userIds = this.state.privacies.map(function(privEntry) {
-  //     return privEntry.userId;
-  //   })
-  //
-  //   AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
-  //     fetch('http://localhost:3000/api/privacy', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'x-access-token': token
-  //       },
-  //       body: JSON.stringify({
-  //         userIds: userIds,
-  //         entryId: this.props.clickedEntry
-  //       })
-  //     })
-  //     .then(data => console.log('Server results: ', data))
-  //   });
-  // }
 
   getInitialPrivacies(entryId) {
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
@@ -53,7 +34,6 @@ export default class WhiteListScene extends Component {
           'x-access-token': token
         }
       })
-      // .then( res =>  console.log( 'getInitialPrivacies response: ', res.json() ))
       .then(res => {
         res.json().then(results => {
           this.setState({ privacies: results });
@@ -63,19 +43,58 @@ export default class WhiteListScene extends Component {
     });
   }
 
+  componentWillMount() {
+    this.getInitialPrivacies();
+    this.fetchFriends();
+  }
+
+  componentDidMount() {
+    this.render();
+  }
+
+  fetchFriends() {
+    AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
+      fetch('http://localhost:3000/api/friends', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        }
+      })
+      .then( resp => { resp.json()
+        .then( json => {
+          if (json.name !== 'SequelizeDatabaseError') {
+            console.log('HERE IS THE JSON FRIENDS: ', json);
+            const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+            this.setState({
+              friendList: ds.cloneWithRows(json)
+            });
+          };
+        }).catch((error) => {
+          console.log("error on json():", error)
+        });
+      }).catch( error => {
+        console.log("error on fetch()", error)
+      });
+    });
+  }
+
+  renderRow(rowData) {
+    console.log('rowData for friends: ', rowData);
+    return (
+      <View style={ styles.friend }>
+        <Text>{ rowData.fullname }</Text>
+      </View>
+    )
+  }
+
   render() {
     return (
-      <View style={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        paddingTop: 80
-      }}>
+      <View style={ styles.container }>
         <View style={{ paddingLeft: 6 }}>
           <CheckBox
             checkboxStyle={{width: 18, height: 18}}
-            label='All'
+            label='Public'
             checked={this.state.all}
             onChange={ () => this.setState({all: !this.state.all, none: !this.state.none }) }
           />
@@ -83,11 +102,15 @@ export default class WhiteListScene extends Component {
         <View style={{ paddingLeft: 6 }}>
           <CheckBox
             checkboxStyle={{width: 18, height: 18}}
-            label='None (This entry is private)'
+            label='Private'
             checked={this.state.none}
             onChange={ () => this.setState({none: !this.state.none, all: !this.state.all }) }
           />
         </View>
+        <ListView
+          style={ styles.listView }
+          dataSource={ this.state.friendList }
+          renderRow={ this.renderRow.bind(this) } />
       </View>
     );
   }

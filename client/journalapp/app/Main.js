@@ -217,8 +217,6 @@ export default class Main extends Component {
       });
     });
   }
-
-
   // According to the state's current page, return a certain tab view. Tab views are all stateful, and will
   // potentially contain logic to interact with the server, or navigate to scenes using the Navigator. This
   // is essentially the tab's router.
@@ -236,7 +234,8 @@ export default class Main extends Component {
                                                     navigator={navigator}
                                                     signOut={ this.props.signOut }/>;
     if (this.state.page === 'FeedTab') return <FeedTab
-                                                    navigator={navigator}/>
+                                                    navigator={navigator}
+                                                    updatePostID={ this.updatePostID.bind(this) }/>
   }
 
   // This logic applies routing according the title of the current route. It will be activated whenever the
@@ -323,6 +322,7 @@ export default class Main extends Component {
       return (
         <CommentScene
           navigator={ navigator }
+          postID={ this.state.postID }
           updateComment={ this.updateComment.bind(this) } />
       )
     } else if (route.title === 'WhiteListScene') {

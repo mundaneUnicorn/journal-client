@@ -5,13 +5,12 @@ import {
   TextInput,
   ListView,
   View,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 
 // VB: Refactored require to use import, for consistency
 import Swipeout from 'react-native-swipeout';
 import Entry from './Entry';
-import Comment from './Comment';
 import styles from '../styles/EntryListStyles';
 
 var EntryList = ({user, token, entries, rerender, userEntries, navigator, updatePostID, renderWhiteList}) => (
@@ -45,12 +44,26 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
         return userEntries ? (
           <View>
             <Swipeout right={swipeBtn} autoClose='true' backgroundColor='transparent'>
-              <Entry renderWhiteList={ renderWhiteList } navigator={ navigator } id={ rowData.id } user={ user } token={ token } votes={ rowData.votes } text={ rowData.text } createdAt={ rowData.createdAt } friendPost={ false } location={ rowData.location }/>
+
+              <Entry
+                    renderWhiteList={ renderWhiteList }
+                    navigator={ navigator }
+                    id={ rowData.id }
+                    author={ rowData.user }
+                    user={ user }
+                    token={ token }
+                    votes={ rowData.votes }
+                    text={ rowData.text }
+                    createdAt={ rowData.createdAt }
+                    updatePostID={ updatePostID }
+                    friendPost={ false }
+                    location={ rowData.location }/>
             </Swipeout>
           </View>
         ) : (<Entry
                  renderWhiteList={ renderWhiteList }
                  id={ rowData.id }
+                 author={ rowData.user }
                  user={ user }
                  token={ token }
                  votes={ rowData.votes }
@@ -59,7 +72,7 @@ var EntryList = ({user, token, entries, rerender, userEntries, navigator, update
                  friendPost={ true }
                  location={ rowData.location }
                  updatePostID={ updatePostID }
-                 navigator={ navigator }/>)
+                 navigator={ navigator }/>);
       }}/>
 )
 
