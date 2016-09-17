@@ -30,10 +30,18 @@ var styles = StyleSheet.create({
     paddingBottom: 5,
     marginBottom: 10
   },
+  namedate: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 20
+  },
   name: {
     color: '#1e90ff',
-    height: 20,
-    fontWeight: '600'
+    fontWeight: '600',
+    paddingRight: 10
+  },
+  date: {
+    color: '#d3d3d3',
   },
   message: {
     paddingLeft: 15,

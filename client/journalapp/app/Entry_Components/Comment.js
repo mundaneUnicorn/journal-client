@@ -7,6 +7,7 @@ import {
   AsyncStorage
 } from 'react-native';
 
+import DateFormatter from 'dateformat';
 import styles from '../styles/CommentStyles';
 
 export default class Comment extends Component {
@@ -26,6 +27,15 @@ export default class Comment extends Component {
 
   componentDidMount() {
     this.render();
+  }
+
+  parseDate(date) {
+    if (date) {
+      date = new Date(date);
+      return DateFormatter(date, "ddd, mmm d");
+    } else {
+      return 'October 10th';
+    }
   }
 
   getComments() {
@@ -56,7 +66,10 @@ export default class Comment extends Component {
     console.log('row data: ', rowData);
     return (
       <View style={ styles.comment } >
-        <Text style={ styles.name }>{rowData.fullname + ':'}</Text>
+        <View style={ styles.namedate } >
+          <Text style={ styles.name }>{rowData.fullname}</Text>
+          <Text style={ styles.date }>{ this.parseDate(rowData.createdAt) }</Text>
+        </View>
         <Text style={ styles.message }>{rowData.message}</Text>
       </View>
     )
