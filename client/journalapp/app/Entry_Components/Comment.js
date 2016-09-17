@@ -23,6 +23,7 @@ export default class Comment extends Component {
 
   componentWillMount() {
     this.getComments();
+    this.render();
   }
 
   componentDidMount() {
@@ -52,7 +53,8 @@ export default class Comment extends Component {
           const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
           this.setState({
             comments: ds.cloneWithRows(json)
-          })
+          });
+          this.render();
         }).catch(err => {
           console.log('fetching comments error: ', err);
         })
