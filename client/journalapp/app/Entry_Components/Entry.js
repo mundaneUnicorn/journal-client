@@ -117,7 +117,7 @@ export default class Entry extends Component {
   render() {
     return (
 
-      <TouchableHighlight onPress={ () => { this.props.renderWhiteList(this.props.id, this.props.navigator) } }>
+      <TouchableHighlight onPress={ () => { if (!this.props.friendPost) { this.props.renderWhiteList(this.props.id, this.props.navigator) }} }>
         <View style={ this.state.entryStyle }>
           <View style={ styles.row }>
             <View style={ styles.rowHeader }>
