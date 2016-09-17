@@ -208,7 +208,7 @@ export default class Main extends Component {
       userIds = privacies.map(function(obj) {
         return obj.userId;
       })
-    }
+    } 
 
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/privacy', {
