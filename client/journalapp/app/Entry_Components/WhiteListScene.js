@@ -60,9 +60,6 @@ export default class WhiteListScene extends Component {
             onChange={ () => this.setState({none: !this.state.none, all: !this.state.all }) }
           />
         </View>
-        <Text>
-          { this.state.specific }
-        </Text>
         <SearchFriends
           navigator={ navigator }
           placeholder={ 'Who can read this?' }/>
