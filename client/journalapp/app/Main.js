@@ -209,7 +209,6 @@ export default class Main extends Component {
         return obj.userId;
       })
     }
-    console.log('userIds: ', userIds);
 
     AsyncStorage.getItem('@MySuperStore:token', (err, token) => {
       fetch('http://journal-app-mundane-unicorns.herokuapp.com/api/privacy', {
